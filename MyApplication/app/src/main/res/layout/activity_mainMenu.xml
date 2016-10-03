@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <EditText android:id="@+id/edit_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_room"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button android:id="@+id/button_find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_find"
+        android:layout_below="@+id/edit_room"
+        android:layout_centerHorizontal="true" />
+
+    <Button android:id="@+id/button_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_schedule"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button android:id="@+id/button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_settings"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button android:id="@+id/button_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_about"
+        android:layout_marginTop="450dp"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView android:id="@+id/image_raven"
+        android:src="@drawable/raven"
+        android:layout_below="@+id/button_find"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+
