@@ -18,7 +18,7 @@
         android:paddingRight="60dp"
         android:theme="@style/settings_switch"
         android:switchPadding="50dp"
-        android:text="@string/switch_reminder"/>
+        android:text="@string/switch_reminder" />
 
 
     <Switch
@@ -31,7 +31,7 @@
         android:paddingRight="60dp"
         android:theme="@style/settings_switch"
         android:switchPadding="50dp"
-        android:text="@string/switch_vibrate"/>
+        android:text="@string/switch_vibrate" />
 
     <Switch
         android:id="@+id/switch_toast"
@@ -43,7 +43,7 @@
         android:paddingRight="60dp"
         android:theme="@style/settings_switch"
         android:switchPadding="50dp"
-        android:text="@string/switch_toast"/>
+        android:text="@string/switch_toast" />
 
     <Switch
         android:id="@+id/switch_sound"
@@ -55,7 +55,7 @@
         android:paddingRight="60dp"
         android:theme="@style/settings_switch"
         android:switchPadding="50dp"
-        android:text="@string/switch_sound"/>
+        android:text="@string/switch_sound" />
 
     <EditText android:id="@+id/text_enter_minutes"
         android:layout_width="wrap_content"
