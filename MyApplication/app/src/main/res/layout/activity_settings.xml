@@ -57,4 +57,19 @@
         android:switchPadding="50dp"
         android:text="@string/switch_sound"/>
 
+    <EditText android:id="@+id/text_enter_minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_minutes"
+        android:layout_below="@+id/switch_sound"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp" />
+
+    <Button android:id="@+id/button_find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_enter"
+        android:layout_below="@+id/text_enter_minutes"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

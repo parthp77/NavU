@@ -3,8 +3,9 @@ package com.example.alex.myapplication;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
+import android.content.Intent;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,8 +13,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-    }
 
-    public void settings(View view) { setContentView(R.layout.activity_settings); }
+        Button button = (Button) findViewById(R.id.button_settings);
+        
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this,
+                        SettingsActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+    }
 
 }
