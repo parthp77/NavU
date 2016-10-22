@@ -1,8 +1,8 @@
 <resources>
 <string name="app_name">NavU</string>
-<string name="edit_room">Input room number</string>
+<string name="edit_room">Search (Ex: 3341 Herzberg)</string>
 <string name="edit_minutes">Enter Minutes</string>
-<string name="button_find">Find</string>
+<string name="button_find">Search</string>
 <string name="button_enter">Enter</string>
 <string name="button_schedule">My Schedule</string>
 <string name="button_settings">Settings</string>

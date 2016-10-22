@@ -6,21 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <EditText android:id="@+id/text_edit_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_room"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true" />
+    <ImageView android:id="@+id/image_raven"
+        android:src="@drawable/navu"
+        android:layout_below="@+id/button_find"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/button_find"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_find"
-        android:layout_below="@+id/text_edit_room"
-        android:layout_centerHorizontal="true" />
-
-    <Button android:id="@+id/button_schedule"
+     <Button android:id="@+id/button_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_schedule"
@@ -45,8 +39,22 @@
         android:src="@drawable/raven"
         android:layout_below="@+id/button_find"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="240dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <EditText android:id="@+id/text_edit_room"
+        android:hint=" ⌕ Search (Room#, Building)"
+        android:gravity="center"
+        android:background="@color/grey"
+        android:textSize="18sp"
+        android:elegantTextHeight="false"
+        android:layout_height="48dp"
+        android:layout_width="245dp"
+        android:layout_marginTop="-170dp"
+        android:layout_below="@+id/image_raven"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>
 
