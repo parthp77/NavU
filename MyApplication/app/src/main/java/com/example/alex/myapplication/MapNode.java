@@ -6,15 +6,20 @@ import java.util.ArrayList;
 
 /**
  * Created by Alex on 2016-10-22.
+ * Standard node, created from node_data.xml
+ * Should be positioned outside doors and at corners
  */
 
 public class MapNode {
 
-    private short x, y;
+    //position of nodes
+    private float x, y;
+    //list of connected nodes
     private ArrayList<String> connections;
+    //room id (e.g. ML472 or HP3341)
     private String id;
 
-    public MapNode(short posx, short posy, String iden, ArrayList<String> nodes)
+    public MapNode(float posx, float posy, String iden, ArrayList<String> nodes)
     {
         x = posx;
         y = posy;
@@ -22,6 +27,19 @@ public class MapNode {
         id = iden;
     }
 
+    public float getX()
+    {
+        return x;
+    }
 
+    public float getY()
+    {
+        return y;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
 
 }
