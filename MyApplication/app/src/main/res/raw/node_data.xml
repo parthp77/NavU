@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<building>
-    <id>ML</id>
-    <floor>
-        <id>4</id>
+<building name="ML">
+    <floor name="4">
         <node>
             <positionx>7</positionx>
             <positiony>10</positiony>
             <id>ML472</id>
+            <num>1</num>
             <connection>ML473</connection>
         </node>
         <node>
             <positionx>29</positionx>
             <positiony>10</positiony>
             <id>ML473</id>
+            <num>2</num>
             <connection>ML472</connection>
             <connection>corner401</connection>
         </node>
@@ -21,6 +21,7 @@
             <positionx>33</positionx>
             <positiony>10</positiony>
             <id>corner401</id>
+            <num>2</num>
             <connection>ML473</connection>
             <connection>corner402</connection>
         </node>
@@ -28,6 +29,7 @@
             <positionx>33</positionx>
             <positiony>29</positiony>
             <id>corner402</id>
+            <num>2</num>
             <connection>corner401</connection>
             <connection>ML474</connection>
         </node>
@@ -35,6 +37,7 @@
             <positionx>8</positionx>
             <positiony>29</positiony>
             <id>ML474</id>
+            <num>1</num>
             <connection>corner402</connection>
         </node>
     </floor>
