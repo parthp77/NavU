@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-Building b = new Building(this, "lol");
+
         Button button = (Button) findViewById(R.id.button_settings);
 
         button.setOnClickListener(new OnClickListener() {
