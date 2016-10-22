@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<building>
+    <id>ML</id>
+    <floor>
+        <id>4</id>
+        <node>
+            <positionx>7</positionx>
+            <positiony>10</positiony>
+            <id>ML472</id>
+            <connection>ML473</connection>
+        </node>
+        <node>
+            <positionx>29</positionx>
+            <positiony>10</positiony>
+            <id>ML473</id>
+            <connection>ML472</connection>
+            <connection>corner401</connection>
+        </node>
+        <node>
+            <positionx>33</positionx>
+            <positiony>10</positiony>
+            <id>corner401</id>
+            <connection>ML473</connection>
+            <connection>corner402</connection>
+        </node>
+        <node>
+            <positionx>33</positionx>
+            <positiony>29</positiony>
+            <id>corner402</id>
+            <connection>corner401</connection>
+            <connection>ML474</connection>
+        </node>
+        <node>
+            <positionx>8</positionx>
+            <positiony>29</positiony>
+            <id>ML474</id>
+            <connection>corner402</connection>
+        </node>
+    </floor>
+</building>
+

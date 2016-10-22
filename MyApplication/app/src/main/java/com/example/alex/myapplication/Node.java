@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class Node {
 
     private short x, y;
-    private ArrayList<Node> connections;
+    private ArrayList<String> connections;
     private String id;
 
-    public Node(short posx, short posy, String iden, ArrayList<Node> nodes)
+    public Node(short posx, short posy, String iden, ArrayList<String> nodes)
     {
         x = posx;
         y = posy;
