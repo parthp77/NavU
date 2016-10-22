@@ -7,69 +7,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-
-    <Switch
-        android:id="@+id/switch_reminders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:paddingRight="60dp"
-        android:theme="@style/settings_switch"
-        android:switchPadding="50dp"
-        android:text="@string/switch_reminder" />
-
-
-    <Switch
-        android:id="@+id/switch_vibrate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:paddingRight="60dp"
-        android:theme="@style/settings_switch"
-        android:switchPadding="50dp"
-        android:text="@string/switch_vibrate" />
-
-    <Switch
-        android:id="@+id/switch_toast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:paddingRight="60dp"
-        android:theme="@style/settings_switch"
-        android:switchPadding="50dp"
-        android:text="@string/switch_toast" />
-
-    <Switch
-        android:id="@+id/switch_sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:paddingRight="60dp"
-        android:theme="@style/settings_switch"
-        android:switchPadding="50dp"
-        android:text="@string/switch_sound" />
-
-    <EditText android:id="@+id/text_enter_minutes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_minutes"
-        android:layout_below="@+id/switch_sound"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp" />
-
-    <Button android:id="@+id/button_find"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_enter"
-        android:layout_below="@+id/text_enter_minutes"
-        android:layout_centerHorizontal="true" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@android:id/title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:ellipsize="marquee"/>
 </RelativeLayout>
+
