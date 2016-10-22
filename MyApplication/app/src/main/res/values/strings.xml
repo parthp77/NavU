@@ -18,5 +18,5 @@
     <string name="pref_version">1.0</string>
 
     <!--About-->
-    <string name="text_about">Authors:\nAlexandreSkipper\nTed Kachulis\nMike Stupich\nParth Patel</string>
+    <string name="text_about"><b>Authors:</b>\n\nAlexandre Skipper\nTed Kachulis\nMike Stupich\nParth Patel\n\n <b>Version:</b> \n \n <i>Alpha v0.01</i> \n\n </string>
 </resources>
