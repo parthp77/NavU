@@ -1,0 +1,15 @@
+Theodore Kachulis - 100970278
+
+We have decided that meetings will be help on Mondays, around noon, in HP 3341.
+
+We have had our first few meetings, and have decided our app goal: to create an app that helps
+university students find their way through large confusing campus buildings.
+
+Below is some functionality we want our app to have:
+
+	-Navigate to specific classes within a building
+	-Class reminders (notifications)
+	-Outdoor navigation between buildings? (If time only)
+	-Being able to input a students schedule
+
+

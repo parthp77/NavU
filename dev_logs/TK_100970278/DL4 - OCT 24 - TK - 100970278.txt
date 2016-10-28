@@ -1,0 +1,12 @@
+Theodore Kachulis - 100970278
+
+This week has had a lot of progress so far. We commit to meeting up a few times over the reading week.
+
+At todays get together, we pushed a lot of updates to our repository and cleaned up most of the UI. Our
+mapping is getting figured out with pretty good progress. We will be using scaled images and a coordinate
+system of nodes.
+
+We will be using vector recreations of the blueprints found at elevators and emergency exits of the campus
+buildings.
+
+For testing purposes, we've been modelling the third floor of Herzberg.

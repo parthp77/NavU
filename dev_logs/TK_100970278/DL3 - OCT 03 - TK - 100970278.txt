@@ -1,4 +1,4 @@
-Theodore Kachulis - 100970278 - OCT Week 2
+Theodore Kachulis - 100970278
 
 This week we have finished pre implementation discussion, and are starting to get to
 work on the code.
@@ -18,9 +18,5 @@ based system. Before we know for sure, we want to try a few things out.
 This weeks goals include figuring out and implementing a mock version of our visual map,
 and deciding on deadlines. We are all busy due to midterms etc right now, but we have plans
 for a codeathon/hack meetup over reading week to make some solid progress.
-
-
-
-
 
 TK
