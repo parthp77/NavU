@@ -25,6 +25,10 @@ public class MapNode {
         y = posy;
         connections = nodes;
         id = iden;
+
+        Log.d("id: ", id);
+        Log.d("posx: ", Float.toString(x));
+        Log.d("posy: ", Float.toString(y));
     }
 
     public float getX()

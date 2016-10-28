@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        Building b = new Building(this, "ML");
+
         Button button = (Button) findViewById(R.id.button_settings);
 
         button.setOnClickListener(new OnClickListener() {
