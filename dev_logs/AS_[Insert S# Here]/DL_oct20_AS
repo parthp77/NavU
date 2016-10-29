@@ -1,0 +1,7 @@
+Built MapNode class, which we will use to generate directions: it holds the position of the node (stairs, doors, corners) as well as an
+  ID (building, floor, room number) and a list of connected nodes
+  
+Began the Building class:
+  > holds all nodes in a building
+  > can pathfind through the nodes to provide directions
+  > parses XML document to find relevent nodes (doesn't hold nodes for ALL buildings at once, only the on the user is in)

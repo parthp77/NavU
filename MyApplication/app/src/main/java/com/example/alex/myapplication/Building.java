@@ -25,14 +25,18 @@ public class Building {
     //constructor, a room ID (for determing what building to load)
     public Building(Context context, String init)
     {
-        parseXML(context);
+        parseXML(context, init);
     }
 
     //finds optimal path
     //takes user's position and destination node (room)
-    public void plotCourse(MapNode start, MapNode end)
+    public ArrayList<MapNode> plotCourse(MapNode start, MapNode end)
     {
+        ArrayList<MapNode> nodes = new ArrayList<MapNode>();
 
+
+
+        return nodes;
     }
 
     //finds node closest to a position (e.g. user input)
@@ -67,7 +71,7 @@ public class Building {
     }
 
     //parses the XML for building data
-    public void parseXML(Context context)
+    public void parseXML(Context context, String building)
     {
         try {
             //init parser
@@ -76,7 +80,10 @@ public class Building {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("node");
+            //find the element corresponding to the building we're interested in
+            Element ele = doc.getElementById(building);
+            //find all elements in that building
+            NodeList nList = ele.getElementsByTagName("node");
             for (int i=0; i < nList.getLength(); i++)
             {
                 Node nNode = nList.item(i);

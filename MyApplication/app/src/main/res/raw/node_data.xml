@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<building name="ML">
-    <floor name="4">
+<building id="ML">
+    <floor id="4">
         <node>
             <positionx>7</positionx>
             <positiony>10</positiony>

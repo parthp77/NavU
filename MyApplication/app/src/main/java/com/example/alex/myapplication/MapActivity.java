@@ -27,7 +27,7 @@ public class MapActivity extends AppCompatActivity {
         short floor = Short.parseShort(room.substring(2,3));
         short roomN = Short.parseShort(room.substring(3));
 
-        building = new Building(this, "lul");
+        building = new Building(this, build);
     }
 
 }
