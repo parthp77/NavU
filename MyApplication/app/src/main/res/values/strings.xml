@@ -19,4 +19,12 @@
 
     <!--About-->
     <string name="text_about"><b>Authors:</b>\n\nAlexandre Skipper\nTed Kachulis\nMike Stupich\nParth Patel\n\n <b>Version:</b> \n \n <i>Alpha v0.01</i> \n\n </string>
+
+    <string name="notification_message_title">%1$s</string>
+
+
+    <string name="notification_message">You have %1$s coming up! Click for directions.
+    </string>
+
+    <string name="action_snooze">Snooze 5 min</string>
 </resources>
