@@ -58,6 +58,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        button = (Button) findViewById(R.id.button_search);
+
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this,
+                        MapActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+
         button = (Button) findViewById(R.id.button_schedule);
 
         button.setOnClickListener(new OnClickListener() {
@@ -68,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-
     }
 
     //Notification functions
