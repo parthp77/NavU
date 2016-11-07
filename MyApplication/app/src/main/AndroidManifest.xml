@@ -20,6 +20,7 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".ClassesActivity" />
+        <activity android:name=".MapActivity" />
         <receiver android:name=".NotificationPublisher"/>
     </application>
 
