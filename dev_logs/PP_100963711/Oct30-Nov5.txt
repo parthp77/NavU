@@ -1,0 +1,4 @@
+Oct 30 - Nov 5
+  - Converted svg of Herzberg floorplan into XML, to be viewed in the app
+  - Added map activity and layout
+  - had some issues with git
