@@ -1,0 +1,16 @@
+Michael Stupich Dev Log -- October 13, 2016
+
+Began to work with android studio, and familarize myself with how it works.
+
+Began coding 
+			Main Activity
+				-Navigation to other pages
+				-Initial layout
+			Settings Activity
+				-Switches
+			About Activity
+				-Displaying a string including our names
+				
+Also did some research into storing settings values, and looking at some of the built in activities
+			
+	

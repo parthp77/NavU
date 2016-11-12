@@ -1,0 +1,10 @@
+Michael Stupich Dev Log -- November 3, 2016
+
+Discussed some layout ideas with Ted regarding My Schedule page
+
+Coding:
+	Read the preferences that were saved to xml file
+	Created notification function to alert user
+		--> Used for notifications before class
+		--> Created a function that will take a time provided by the user when they enter their class info, and send them a notification 
+	
