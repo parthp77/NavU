@@ -36,7 +36,7 @@ public class Building {
         ArrayList<MapNode> toVisit = new ArrayList<MapNode>();
         toVisit.add(start);
 
-        while (!visitedNodes.isEmpty())
+        while (!toVisit.isEmpty())
         {
             MapNode node = toVisit.remove(0);
             //check if path has been found
@@ -62,7 +62,7 @@ public class Building {
         return null;
     }
 
-    private MapNode getNodeById(String id)
+    public MapNode getNodeById(String id)
     {
         for (int i=0; i < mapNodes.size(); i++)
         {
@@ -75,7 +75,7 @@ public class Building {
     {
         ArrayList<MapNode> path = new ArrayList<MapNode>();
         //build list of nodes along the path
-        while (n.getParent() != null) {
+        while (n != null) {
             path.add(n);
             n = n.getParent();
         }
@@ -90,10 +90,11 @@ public class Building {
     //finds node closest to a position (e.g. user input)
     public MapNode findNode(float x, float y)
     {
-        MapNode curr = mapNodes.get(0);
 
         if (mapNodes.isEmpty())
             return null;
+
+        MapNode curr = mapNodes.get(0);
 
         for (int i=1; i < mapNodes.size(); i++)
         {
