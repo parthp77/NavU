@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<building id="ML">
+<building id="HP">
+    <floor id="2">
+        <node>
+            <positionx>69</positionx>
+            <positiony>69</positiony>
+            <id>HP2420</id>
+            <connection>HP2418</connection>
+        </node>
+    </floor>
+</building>
+
+
+
+<!--building id="ML">
     <floor id="4">
         <node>
             <positionx>7</positionx>
@@ -36,5 +49,5 @@
             <connection>corner402</connection>
         </node>
     </floor>
-</building>
+</building-->
 
