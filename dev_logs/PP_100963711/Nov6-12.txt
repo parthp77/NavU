@@ -1,4 +1,7 @@
 Week of Nov 6-12:
-	- Added colour-coded nodes to HP map, which is now displayed on the Map Activity.
+	- Added colour-coded nodes to HP map, which is finally able to render
+	 		on the Map Activity screen
 	- Discussed different ways of storing, retrieving, and displaying map nodes
 	- Changed the App's launcher icon to the mountain png that Ted made
+	- Floors 2 and 3 completed, with room numbers.
+	- Finalized scaling solution (as percentage of image size)
