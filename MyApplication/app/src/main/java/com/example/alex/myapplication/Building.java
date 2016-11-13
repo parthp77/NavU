@@ -32,11 +32,58 @@ public class Building {
     //takes user's position and destination node (room)
     public ArrayList<MapNode> plotCourse(MapNode start, MapNode end)
     {
-        ArrayList<MapNode> nodes = new ArrayList<MapNode>();
+        ArrayList<MapNode> visitedNodes = new ArrayList<MapNode>();
+        ArrayList<MapNode> toVisit = new ArrayList<MapNode>();
+        toVisit.add(start);
 
+        while (!visitedNodes.isEmpty())
+        {
+            MapNode node = toVisit.remove(0);
+            //check if path has been found
+            if (node == end) return buildPath(end);
+            else
+            {
+                //add current node to the list of visited nodes
+                visitedNodes.add(node);
 
+                for (int i=0; i < node.connections.size(); i++)
+                {
+                    //add each unvisited node to the list of visited and add each to the list of branches to search
+                    MapNode neighbour = getNodeById(node.connections.get(i));
+                    if (!visitedNodes.contains(neighbour) && !toVisit.contains(neighbour))
+                    {
+                        neighbour.setParent(node);
+                        toVisit.add(neighbour);
+                    }
+                }
+            }
+        }
 
-        return nodes;
+        return null;
+    }
+
+    private MapNode getNodeById(String id)
+    {
+        for (int i=0; i < mapNodes.size(); i++)
+        {
+            if (mapNodes.get(i).getId().equals(id)) return mapNodes.get(i);
+        }
+    }
+
+    private ArrayList<MapNode> buildPath(MapNode n)
+    {
+        ArrayList<MapNode> path = new ArrayList<MapNode>();
+        //build list of nodes along the path
+        while (n.getParent() != null) {
+            path.add(n);
+            n = n.getParent();
+        }
+        //reset all the parents for next search
+        for (int i=0; i < path.size(); i++)
+        {
+            path.get(i).setParent(null);
+        }
+        return path;
     }
 
     //finds node closest to a position (e.g. user input)
@@ -56,7 +103,7 @@ public class Building {
     }
 
     //compares distance between 2 nodes and a point, returning the closest
-    public MapNode compareDist(MapNode n1, MapNode n2, float x, float y)
+    private MapNode compareDist(MapNode n1, MapNode n2, float x, float y)
     {
         if (dist(n1.getX(), n1.getY(), x, y) < dist(n2.getX(), n2.getY(), x, y))
             return n1;
@@ -65,13 +112,13 @@ public class Building {
     }
 
     //returns distance between 2 points
-    public float dist(float x1, float y1, float x2, float y2)
+    private float dist(float x1, float y1, float x2, float y2)
     {
         return (float)Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
     }
 
     //parses the XML for building data
-    public void parseXML(Context context, String building)
+    private void parseXML(Context context, String building)
     {
         try {
             //init parser
@@ -89,10 +136,8 @@ public class Building {
                 Node nNode = nList.item(i);
                 Element eElement = (Element) nNode;
                 ArrayList<String> connections = new ArrayList<String>();
-                //find number of connetions
-                int j = Integer.parseInt(eElement.getElementsByTagName("num").item(0).getTextContent());
                 //add connetions to list
-                for (int k=0; k < j; k++){
+                for (int k=0; k < eElement.getElementsByTagName("connection").getLength(); k++){
                     connections.add(eElement.getElementsByTagName("connection").item(k).getTextContent());
                 }
                 //create new mapNode
