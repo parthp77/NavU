@@ -68,6 +68,7 @@ public class Building {
         {
             if (mapNodes.get(i).getId().equals(id)) return mapNodes.get(i);
         }
+        return null;
     }
 
     private ArrayList<MapNode> buildPath(MapNode n)
