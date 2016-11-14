@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.button_settings);
 
-        button.setOnClickListener(new OnClickListener() {
+                button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(MainActivity.this,
                         SettingsActivity.class);
