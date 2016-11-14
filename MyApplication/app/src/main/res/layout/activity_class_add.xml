@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/classNameInput"
         android:textAlignment="viewStart"
         android:hint="   Enter class name.."
         />
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/checkBox"
+        android:id="@+id/class"
         android:layout_weight="0.03" />
 
     <CheckBox

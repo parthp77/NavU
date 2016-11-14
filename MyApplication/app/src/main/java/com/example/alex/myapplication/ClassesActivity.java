@@ -3,7 +3,6 @@ package com.example.alex.myapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +13,12 @@ import android.widget.ListView;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-import static com.example.alex.myapplication.R.xml.classes;
-
 public class ClassesActivity extends AppCompatActivity {
      String[] listEle = new String[5];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_classes);
+        setContentView(R.layout.activity_mySchedule);
         listEle = fillList();
         //String [] listEle  = {"C1","C2","C3","C4","C5"};
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, listEle);
