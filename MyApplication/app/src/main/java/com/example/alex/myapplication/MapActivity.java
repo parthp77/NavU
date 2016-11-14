@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,19 +20,18 @@ public class MapActivity extends AppCompatActivity {
 
     private Building building;
     ArrayList<MapNode> route;
+    private Drawable map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new MyView(this));
-        String test = "ML474";
-
+        String test = "HP3160";
         loadData(test);
-        route = building.plotCourse(building.findNode(10,10), building.getNodeById(test));
+        route = building.plotCourse(building.findNode(0,0), building.getNodeById(test));
 
-        for (int i=0; i < route.size(); i++)
-            Log.d("node", route.get(i).getId());
-
+        Log.d("start", building.findNode(0,0).getId());
+        Log.d("end", building.getNodeById(test).getId());
     }
 
     private void loadData(String room)
@@ -40,26 +40,13 @@ public class MapActivity extends AppCompatActivity {
         building = new Building(this, build);
     }
 
-    private void drawRoute(Canvas c)
-    {
-        if (route == null) return;
-
-        Paint p = new Paint();
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(5);
-        p.setColor(Color.RED);
-        for (int i=0; i < route.size()-1; i++)
-        {
-            c.drawLine(route.get(i).getX()*20, route.get(i).getY()*20, route.get(i+1).getX()*20, route.get(i+1).getY()*20, p);
-        }
-    }
-
     public class MyView extends View
     {
 
         public MyView(Context context)
         {
             super(context);
+            map = context.getResources().getDrawable(R.drawable.hp3);
         }
 
         @Override
@@ -70,9 +57,18 @@ public class MapActivity extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);
-            paint.setColor(Color.BLUE);
-            //canvas.drawCircle(getWidth()/2, getHeight()/2, 100, paint);
-            drawRoute(canvas);
+            map.setBounds(0,0,getWidth(),getHeight());
+            map.draw(canvas);
+
+            if (route == null) return;
+            Paint p = new Paint();
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(5);
+            p.setColor(Color.RED);
+            for (int i=0; i < route.size()-1; i++)
+            {
+                canvas.drawLine(route.get(i).getX()*getWidth(), route.get(i).getY()*getHeight(), route.get(i+1).getX()*getWidth(), route.get(i+1).getY()*getHeight(), p);
+            }
         }
     }
 

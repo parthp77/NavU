@@ -237,14 +237,4 @@
         <id>C306</id>
         <connection>C305</connection>
     </node>
-
-
-    <node>
-        <positionx>69</positionx>
-        <positiony>69</positiony>
-        <id>HP2420</id>
-        <connection>HP2418</connection>
-    </node>
 </building>
-
-    </building>
