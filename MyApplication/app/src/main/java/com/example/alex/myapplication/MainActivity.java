@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         myCalendar.set(Calendar.MINUTE, 5);
 
 
-        Building b = new Building(this, "ML");
+        Building b = new Building(this, "HP");
         final Context context = getApplicationContext();
 
 

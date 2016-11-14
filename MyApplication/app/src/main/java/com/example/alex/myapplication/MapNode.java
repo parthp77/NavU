@@ -15,20 +15,19 @@ public class MapNode {
     //position of nodes
     private float x, y;
     //list of connected nodes
-    private ArrayList<String> connections;
+    public ArrayList<String> connections;
     //room id (e.g. ML472 or HP3341)
     private String id;
+    //for searching only
+    private MapNode parent;
 
-    public MapNode(float posx, float posy, String iden, ArrayList<String> nodes)
+    public MapNode(float posx, float posy, String iden, ArrayList<String> s)
     {
         x = posx;
         y = posy;
-        connections = nodes;
         id = iden;
-
-        Log.d("id: ", id);
-        Log.d("posx: ", Float.toString(x));
-        Log.d("posy: ", Float.toString(y));
+        connections = s;
+        parent = null;
     }
 
     public float getX()
@@ -45,5 +44,9 @@ public class MapNode {
     {
         return id;
     }
+
+    public MapNode getParent() { return parent; }
+
+    public void setParent(MapNode p) { parent = p; }
 
 }
