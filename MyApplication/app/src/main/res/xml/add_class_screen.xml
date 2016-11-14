@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:android="http://schemas.android.com/apk/res/android">
+<Preference
+    android:title="@string/label_classes"
+    android:key="@string/pref_version"
+    android:layout="@layout/activity_classes"
+    android:id="@+id/preference" />
+<SwitchPreference
+    android:defaultValue="true"
+    android:key="class_reminder"
+    android:title="@string/switch_reminder" />
+<SwitchPreference
+    android:defaultValue="true"
+    android:key="vibrate"
+    android:title="@string/switch_vibrate"/>
+<SwitchPreference
+    android:defaultValue="true"
+    android:key="sound"
+    android:title="@string/switch_sound" />
+<SwitchPreference
+    android:defaultValue="true"
+    android:key="toast"
+    android:title="@string/switch_toast" />
+<ListPreference
+    android:key="mins"
+    android:entries="@array/mins"
+    android:entryValues="@array/minsArr"
+    android:summary="%s"
+    android:title="Enter time prior to class to be notified"/>
+
+</PreferenceScreen>
