@@ -6,7 +6,6 @@
     tools:context=".AddClassActivity"
     android:weightSum="1">
 
-
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
