@@ -22,6 +22,7 @@
         <activity android:name=".ClassesActivity" />
         <activity android:name=".MapActivity" />
         <receiver android:name=".NotificationPublisher"/>
+        <activity android:name=".AddClassActivity"/>
     </application>
 
 </manifest>

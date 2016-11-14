@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <Class
+        android:key="Class1"
+        android:name="COMP9000"
+        Days="Monday_Wednesday"
+        StartTime="10:05"
+        EndTime="11:35">
+    </Class>
+    <Class
+        android:key="Class2"
+        android:name="COMP3004"
+        Days="Monday_Wednesday"
+        StartTime="11:35"
+        EndTime="1:05">
+    </Class>
+    <Class
+        android:key="Class3"
+        android:name="French"
+        Days="Monday_Wednesday"
+        StartTime="10:05"
+        EndTime="11:35">
+    </Class>
+    <Class
+        android:key="Class4"
+        android:name="English"
+        Days="Monday_Wednesday"
+        StartTime="4:05"
+        EndTime="5:25">
+    </Class>
+    <Class
+        android:key="Class5"
+        android:name="Phil"
+        Days="Friday"
+        StartTime="7:05"
+        EndTime="10:05">
+    </Class>
+    <Class
+        android:key="Test"
+        android:name="Phil">
+    </Class>
+
+
+</resources>
