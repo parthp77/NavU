@@ -16,7 +16,7 @@ public class AddClassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class_add);
+        setContentView(R.layout.activity_addclass);
 
         Button b = (Button) findViewById(R.id.AddClassToList);
         b.setOnClickListener(new OnClickListener(){

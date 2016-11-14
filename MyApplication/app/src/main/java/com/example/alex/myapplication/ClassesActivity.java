@@ -18,7 +18,7 @@ public class ClassesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mySchedule);
+        setContentView(R.layout.activity_myschedule);
         listEle = fillList();
         //String [] listEle  = {"C1","C2","C3","C4","C5"};
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, listEle);
