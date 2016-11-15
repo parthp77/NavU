@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <Class
-        android:key="Class1"
-        android:name="COMP9000"
-        Days="Monday_Wednesday"
-        StartTime="10:05"
-        EndTime="11:35">
-    </Class>
-    <Class
-        android:key="Class2"
-        android:name="COMP3004"
-        Days="Monday_Wednesday"
-        StartTime="11:35"
-        EndTime="1:05">
-    </Class>
-    <Class
-        android:key="Class3"
-        android:name="French"
-        Days="Monday_Wednesday"
-        StartTime="10:05"
-        EndTime="11:35">
-    </Class>
-    <Class
-        android:key="Class4"
-        android:name="English"
-        Days="Monday_Wednesday"
-        StartTime="4:05"
-        EndTime="5:25">
-    </Class>
-    <Class
-        android:key="Class5"
-        android:name="Phil"
-        Days="Friday"
-        StartTime="7:05"
-        EndTime="10:05">
-    </Class>
-    <Class
-        android:key="Test"
-        android:name="Phil">
-    </Class>
-
-
-</resources>
+<classList>
+<class>
+<name>COMP9000</name>
+<day1>Monday</day1>
+<day2>Wednesday</day2>
+<startTime>10:05</startTime>
+</class>
+<class>
+<name>COMP3000</name>
+<day1>Tuesday</day1>
+<day2>Thursday</day2>
+<startTime>10:05</startTime>
+</class>
+<class>
+<name>ELEC1000</name>
+<day1>Wednesday</day1>
+<day2>Friday</day2>
+<startTime>7:00</startTime>
+</class>
+<class>
+<name>BUSI2000</name>
+<day1>Wednesday</day1>
+<day2>Friday</day2>
+<startTime>1:05</startTime>
+</class>
+<class>
+<name></name>
+<day1></day1>
+<day2></day2>
+<startTime></startTime>
+</class>
+</classList>

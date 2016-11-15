@@ -1,10 +1,13 @@
 package com.example.alex.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,24 +16,58 @@ import android.widget.ListView;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import java.lang.Class;
+
 public class ClassesActivity extends AppCompatActivity {
-     String[] listEle = new String[5];
+    private static final String TAG = "MyActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
+        ArrayList<String> className = new ArrayList<String>();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
-        listEle = fillList();
-        //String [] listEle  = {"C1","C2","C3","C4","C5"};
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, listEle);
+
+        try {
+            parseXML(this, classList);
+        }
+        catch(XmlPullParserException e){
+            e.printStackTrace();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        for(int i = 0; i < classList.size(); i++){
+            className.add(classList.get(i).getClassName());
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, className);
+
+
 
         ListView listView = (ListView) findViewById(R.id.class_list);
+
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long l) {
                 Object selectedItem = adapter.getItemAtPosition(position);
-                Intent intent = new Intent(ClassesActivity.this, AddClassActivity.class);
-                startActivity(intent);
 
+                Intent intent = new Intent(ClassesActivity.this, EditClassActivity.class);
+                startActivity(intent);
             }
         });
         listView.setAdapter(adapter);
@@ -46,15 +83,110 @@ public class ClassesActivity extends AppCompatActivity {
         });
     }
 
-    private String[] fillList(){
-        //String[] list = new String[5];
-        String[] list  = {"COMP9001","COMP3000","COMP3004","ENG1000","ELEC1001"};
-        SharedPreferences sp = ClassesActivity.this.getSharedPreferences("saved_classes", 0);
-        Log.v("Tag", sp.getString("class1", list[0]));
-        //list[1] = sp.getString("Class2", "temp2");
+    /**
+     * Parses through the classes.xml file and gets the start
+     * @param context
+     * @param classList
+     */
+    private void parseXML(Context context, ArrayList<ClassObj> classList)
+    throws XmlPullParserException, IOException{
+        int eventType = -1;
+        String n = "";
+        String time = "";
+        ArrayList<String> days= new ArrayList<String>();
+        XmlResourceParser parser = context.getResources().getXml(R.xml.classes);
+        parser.next();
+        eventType = parser.getEventType();
+        while(eventType != XmlPullParser.END_DOCUMENT) {
+            if (eventType == XmlPullParser.START_DOCUMENT) {
+                Log.d(TAG, "Start Doc");
+            }
 
-        return list;
+                if(eventType == XmlPullParser.TEXT ){
 
+                    //Log.d(TAG,parser.getText());
+                    n= parser.getText();
+                    parser.next();
+                    days.add(parser.getText());
+                    parser.next();
+                    days.add(parser.getText());
+                    parser.next();
+                    time = parser.getText();
+                    if(n.startsWith("COMP") || n.startsWith("ELEC") || n.startsWith("BUSI")
+                           ||n.startsWith("comp") || n.startsWith("elec") || n.startsWith("busi") ){
+                        ClassObj c = new ClassObj(n, time, days);
+                        classList.add(c);
+                    }
+
+
+                }
+                /*if(parser.getName().equals("name")){
+                    //Log.d(TAG,"HERE");
+                    n = parser.getText();
+                    //parser.next();
+                }
+                if(parser.getName() != null && parser.getName().equalsIgnoreCase("day1")){
+                    //Log.d(TAG,parser.getText());
+                    days.add(parser.getText());
+                    //parser.next();
+                }
+                if(parser.getName() != null && parser.getName().equalsIgnoreCase("day2")){
+                    //Log.d(TAG,parser.getText());
+                    days.add(parser.getText());
+                    //parser.next();
+                }
+                if(parser.getName() != null && parser.getName().equalsIgnoreCase("startTime")){
+                    //Log.d(TAG,parser.getText());
+                    time = parser.getText();
+                    //parser.next();
+                }
+
+                //ClassObj c = new ClassObj(n, time, days);
+                //classList.add(c);*/
+            eventType = parser.next();
+        }
+        parser.close();
+
+        /*
+        try{
+
+            InputStream inputFile = context.getResources().openRawResource(R.raw.classes);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+
+
+            Element el = doc.getElementById("ClassList");
+            NodeList list = el.getElementsByTagName("class");
+            for(int i = 0; i < list.getLength(); i++){
+                Node n = list.item(i);
+                Element e = (Element) n;
+
+                String name = "";
+                String time = "";
+                ArrayList<String> days= new ArrayList<String>();
+
+
+                for(int k =0; k < e.getElementsByTagName("name").getLength(); k++){
+                    name = e.getElementsByTagName("name").item(k).getTextContent();
+                    time = e.getElementsByTagName("startTime").item(k).getTextContent();
+                    days.add(e.getElementsByTagName("day1").item(k).getTextContent());
+                    days.add(e.getElementsByTagName("day2").item(k).getTextContent());
+                }
+
+                ClassObj c = new ClassObj(name, time, days);
+                classList.add(c);
+            }
+
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }*/
     }
+
+
+
 
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classes id="ClassList">
+    <class>
+        <key>class1</key>
+        <name>COMP9000</name>
+        <day1>Monday</day1>
+        <day2>Wednesday</day2>
+        <startTime>10:05</startTime>
+
+    </class>
+    <class>
+        <key>class2</key>
+        <name>COMP3000</name>
+        <day1>Tuesday</day1>
+        <day2>Thursday</day2>
+        <startTime>10:05</startTime>
+
+    </class>
+
+    <class>
+        <key>class3</key>
+        <name>ELEC1000</name>
+        <day1>Friday</day1>
+        <day2></day2>
+        <startTime>7:00</startTime>
+
+    </class>
+    <class>
+        <key>class4</key>
+        <name>BUSI2000</name>
+        <day1>Wednesday</day1>
+        <day2>Friday</day2>
+        <startTime>1:05</startTime>
+
+    </class>
+
+</classes>
