@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -16,6 +18,7 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,7 +32,7 @@ import static android.R.attr.id;
 
 
 public class AddClassActivity extends AppCompatActivity {
-
+    private ClassObj c;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -39,17 +42,46 @@ public class AddClassActivity extends AppCompatActivity {
         b.setOnClickListener(new OnClickListener(){
             public void onClick(View view)
             {
-                saveInfo();
+                c = saveInfo();
+                Bundle extras = new Bundle();
+                extras.putString("className", c.getClassName());
+                extras.putStringArrayList("weekDays",c.getWeekDays());
+                extras.putString("startTime", c.getClassTime());
+
                 Intent myIntent = new Intent(AddClassActivity.this, ClassesActivity.class);
+                myIntent.putExtras(extras);
                 startActivity(myIntent);
             }
 
         });
     }
 
-    private void saveInfo(){
+    private ClassObj saveInfo(){
+        String className = ((EditText)findViewById(R.id.classNameInput)).getText().toString();
+        ArrayList<String> days = new ArrayList<String>();
+        String startTime = ((EditText)findViewById(R.id.editText2)).getText().toString();
 
-        /*try{
+        CheckBox checkBox = (CheckBox) findViewById(R.id.classMonday);
+        if(checkBox.isChecked())
+            days.add("Monday");
+        checkBox = (CheckBox) findViewById(R.id.classTuesday);
+        if(checkBox.isChecked())
+            days.add("Tuesday");
+        checkBox = (CheckBox) findViewById(R.id.classWednesday);
+        if(checkBox.isChecked())
+            days.add("Wednesday");
+        checkBox = (CheckBox) findViewById(R.id.classThursday);
+        if(checkBox.isChecked())
+            days.add("Thursday");
+        checkBox = (CheckBox) findViewById(R.id.classFriday);
+        if(checkBox.isChecked())
+            days.add("Friday");
+
+        ClassObj newClass = new ClassObj(className, startTime, days);
+        return newClass;
+
+        /*
+        try{
         //Load xml from file
         DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
@@ -70,8 +102,8 @@ public class AddClassActivity extends AppCompatActivity {
         SharedPreferences.Editor prefEditor = sp.edit();
         prefEditor.putString("", "");
         prefEditor.commit();
-        */
 
+        */
     }
 
 

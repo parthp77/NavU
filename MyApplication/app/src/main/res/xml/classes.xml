@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <classList>
-<class>
+<class id="1">
 <name>COMP9000</name>
 <day1>Monday</day1>
 <day2>Wednesday</day2>
 <startTime>10:05</startTime>
 </class>
-<class>
+<class id="2">
 <name>COMP3000</name>
 <day1>Tuesday</day1>
 <day2>Thursday</day2>
 <startTime>10:05</startTime>
 </class>
-<class>
+<class id="3">
 <name>ELEC1000</name>
 <day1>Wednesday</day1>
 <day2>Friday</day2>
 <startTime>7:00</startTime>
 </class>
-<class>
-<name>BUSI2000</name>
-<day1>Wednesday</day1>
-<day2>Friday</day2>
-<startTime>1:05</startTime>
+<class id="4">
+<name></name>
+<day1></day1>
+<day2></day2>
+<startTime></startTime>
 </class>
-<class>
+<class id="5">
 <name></name>
 <day1></day1>
 <day2></day2>

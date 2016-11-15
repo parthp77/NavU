@@ -38,9 +38,23 @@ public class ClassesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
         ArrayList<String> className = new ArrayList<String>();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myschedule);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            ClassObj c = new ClassObj(extras.getString("className"),extras.getString("startTime"),extras.getStringArrayList("weekDays"));
+            classList.add(c);
+        }
+        /*
+        Intent i = getIntent();
+        if(i.getStringExtra("name") != null){
+            for(int j = 0; j < classList.size(); j++){
+                if(classList.get(j).getClassName() == i.getStringExtra("name")){
+                    classList.remove(j);
+                }
+            }
+        }*/
 
         try {
             parseXML(this, classList);
@@ -51,8 +65,8 @@ public class ClassesActivity extends AppCompatActivity {
         catch(IOException e){
             e.printStackTrace();
         }
-        for(int i = 0; i < classList.size(); i++){
-            className.add(classList.get(i).getClassName());
+        for(int  k= 0; k < classList.size(); k++){
+            className.add(classList.get(k).getClassName());
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, className);
@@ -66,7 +80,9 @@ public class ClassesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long l) {
                 Object selectedItem = adapter.getItemAtPosition(position);
 
+
                 Intent intent = new Intent(ClassesActivity.this, EditClassActivity.class);
+                intent.putExtra("pos", position);
                 startActivity(intent);
             }
         });
@@ -120,29 +136,7 @@ public class ClassesActivity extends AppCompatActivity {
 
 
                 }
-                /*if(parser.getName().equals("name")){
-                    //Log.d(TAG,"HERE");
-                    n = parser.getText();
-                    //parser.next();
-                }
-                if(parser.getName() != null && parser.getName().equalsIgnoreCase("day1")){
-                    //Log.d(TAG,parser.getText());
-                    days.add(parser.getText());
-                    //parser.next();
-                }
-                if(parser.getName() != null && parser.getName().equalsIgnoreCase("day2")){
-                    //Log.d(TAG,parser.getText());
-                    days.add(parser.getText());
-                    //parser.next();
-                }
-                if(parser.getName() != null && parser.getName().equalsIgnoreCase("startTime")){
-                    //Log.d(TAG,parser.getText());
-                    time = parser.getText();
-                    //parser.next();
-                }
 
-                //ClassObj c = new ClassObj(n, time, days);
-                //classList.add(c);*/
             eventType = parser.next();
         }
         parser.close();

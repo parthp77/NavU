@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/classMonday"
+        android:id="@+id/classMondayOut"
         android:layout_weight="0.03" />
 
     <CheckBox
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/classTuesday"
+        android:id="@+id/classTuesdayOut"
         android:layout_weight="0.03" />
 
     <CheckBox
@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/classWednesday"
+        android:id="@+id/classWednesdayOut"
         android:layout_weight="0.03" />
 
     <CheckBox
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/classThurday"
+        android:id="@+id/classThursdayOut"
         android:layout_weight="0.03" />
 
     <CheckBox
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10sp"
-        android:id="@+id/classFriday"
+        android:id="@+id/classFridayOut"
         android:layout_weight="0.03" />
 
     <Space
