@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(MainActivity.this,
                         MapActivity.class);
+
+                EditText searchBar = (EditText) findViewById(R.id.text_edit_room);
+                String roomString = searchBar.getText().toString();
+
+                myIntent.putExtra("roomString", roomString);
                 startActivity(myIntent);
             }
         });
