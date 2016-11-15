@@ -30,16 +30,9 @@ public class MapActivity extends AppCompatActivity {
         //getting room string from main activity's editText
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
-        //Log.d("String Passed: ", roomString);
 
-
-        String test = "HP3160";
-        loadData(test);
-        route = building.plotCourse(building.findNode(0,0), building.getNodeById(test));
-
-        Log.d("test: ", roomString);
-        Log.d("start", building.findNode(0,0).getId());
-        Log.d("end", building.getNodeById(test).getId());
+        loadData(roomString);
+        route = building.plotCourse(building.findNode(0,0), building.getNodeById(roomString));
     }
 
     private void loadData(String room)

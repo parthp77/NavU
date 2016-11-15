@@ -39,7 +39,7 @@ public class ClassesActivity extends AppCompatActivity {
         ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
         ArrayList<String> className = new ArrayList<String>();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myschedule);
+        setContentView(R.layout.activity_my_schedule);
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
