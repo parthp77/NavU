@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <classList>
     <class>
         <name>COMP9000</name>
@@ -6,16 +6,16 @@
         <day2>Wednesday</day2>
         <startTime>10:05</startTime>
     </class>
-    <class id="2">
+    <class>
         <name>COMP3000</name>
         <day1>Tuesday</day1>
         <day2>Thursday</day2>
         <startTime>10:05</startTime>
     </class>
-    <class id="3">
-        <name>ELEC1000</name>
-        <day1>Wednesday</day1>
-        <day2>Friday</day2>
-        <startTime>7:00</startTime>
+    <class>
+    <name>ELEC1000</name>
+    <day1>Wednesday</day1>
+    <day2>Friday</day2>
+    <startTime>7:00</startTime>
     </class>
 </classList>

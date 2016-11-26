@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AddClassActivity"
@@ -39,8 +40,7 @@
         android:ems="10"
         android:id="@+id/classNameInput"
         android:textAlignment="viewStart"
-        android:hint="   Enter class name.."
-        />
+        android:hint="   Enter class name.." />
 
     <Space
         android:layout_width="match_parent"

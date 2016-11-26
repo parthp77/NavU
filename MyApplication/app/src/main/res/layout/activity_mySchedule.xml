@@ -9,8 +9,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/class_list">
-    </ListView>
+        android:id="@+id/class_list"></ListView>
 
     <Button
         android:text="@string/button_addClass"

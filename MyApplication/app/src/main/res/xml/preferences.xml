@@ -9,12 +9,12 @@
     <SwitchPreference
         android:defaultValue="false"
         android:key="class_reminder"
-        android:title="@string/switch_reminder"/>
+        android:title="@string/switch_reminder" />
     <SwitchPreference
         android:defaultValue="false"
 
         android:key="vibrate"
-        android:title="@string/switch_vibrate"/>
+        android:title="@string/switch_vibrate" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="sound"
@@ -28,6 +28,6 @@
         android:entries="@array/mins"
         android:entryValues="@array/minsArr"
         android:summary="%s"
-        android:title="Enter time prior to class to be notified"/>
+        android:title="Enter time prior to class to be notified" />
 
 </PreferenceScreen>

@@ -3,8 +3,10 @@ package com.example.alex.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.support.annotation.XmlRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
@@ -31,21 +33,23 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.lang.Class;
+import java.util.List;
 
 public class ClassesActivity extends AppCompatActivity {
     private static final String TAG = "MyActivity";
+    private static final String ns = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
         ArrayList<String> className = new ArrayList<String>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedule);
-
+        /*
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             ClassObj c = new ClassObj(extras.getString("className"),extras.getString("startTime"),extras.getStringArrayList("weekDays"));
             classList.add(c);
-        }
+        }*/
         /*
         Intent i = getIntent();
         if(i.getStringExtra("name") != null){
@@ -57,16 +61,20 @@ public class ClassesActivity extends AppCompatActivity {
         }*/
 
         try {
-            parseXML(this, classList);
+             classList = parseXML(this);
+
         }
+
         catch(XmlPullParserException e){
             e.printStackTrace();
         }
         catch(IOException e){
             e.printStackTrace();
         }
+        Log.d("ClassList size: ", ""+classList.size());
         for(int  k= 0; k < classList.size(); k++){
             className.add(classList.get(k).getClassName());
+            //className.add(classList.get(k).getClassName());
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, className);
@@ -99,17 +107,113 @@ public class ClassesActivity extends AppCompatActivity {
         });
     }
 
+    private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
+
+        parser.require(XmlPullParser.START_TAG, ns, "class");
+        String className="", classTime = "";
+        ArrayList<String> days = new ArrayList<>();
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name = parser.getName();
+            if(name.equals("name")){
+                className = readText(parser);
+            }
+            else if(name.equals("day1")){
+                days.add(readText(parser));
+            }
+            else if (name.equals("day2")){
+                days.add(readText(parser));
+            }
+            else if (name.equals("startTime")){
+                classTime = readText(parser);
+            }
+            else{
+                skip(parser);
+            }
+        }
+        //parser.require(XmlPullParser.END_TAG, ns, "class");
+
+
+        return (new ClassObj(className,classTime,days));
+    }
+
+    private String readText(XmlPullParser parser) throws  XmlPullParserException, IOException{
+        String result = "";
+        if(parser.next() == XmlPullParser.TEXT){
+            result = parser.getText();
+            parser.nextTag();
+        }
+        return result;
+    }
+
+    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+        if (parser.getEventType() != XmlPullParser.START_TAG) {
+            throw new IllegalStateException();
+        }
+        int depth = 1;
+        while (depth != 0) {
+            switch (parser.next()) {
+                case XmlPullParser.END_TAG:
+                    depth--;
+                    break;
+                case XmlPullParser.START_TAG:
+                    depth++;
+                    break;
+            }
+        }
+    }
+
+    private ArrayList<ClassObj> readClassList(XmlPullParser parser)throws XmlPullParserException, IOException{
+        ArrayList<ClassObj> entries = new ArrayList<ClassObj>();
+        ClassObj c;
+        parser.require(XmlPullParser.START_TAG, ns, "classList");
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name= parser.getName();
+            Log.d("CurrParserName:" , name);
+            if(name.equals("class")){
+                entries.add(readClass(parser));
+
+                        //.add(readName(parser));
+                //className = readName(parser);
+            }
+            else{
+                skip(parser);
+            }
+        }
+        return entries;
+    }
     /**
      * Parses through the classes.xml file and gets the start
      * @param context
-     * @param classList
      */
-    private void parseXML(Context context, ArrayList<ClassObj> classList)
+    private ArrayList<ClassObj> parseXML(Context context)
     throws XmlPullParserException, IOException{
-        int eventType = -1;
-        String n = "";
-        String time = "";
-        ArrayList<String> days= new ArrayList<String>();
+        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
+        try {
+            AssetManager assetManager = this.getAssets();
+            InputStream file = assetManager.open("classes.xml");
+            //DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+            //DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
+            //document = domBuilder.parse(file);
+
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(file, null);
+            parser.nextTag();
+            classList = readClassList(parser);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return classList;
+
+        /*
+
         XmlResourceParser parser = context.getResources().getXml(R.xml.classes);
         parser.next();
         eventType = parser.getEventType();
@@ -140,7 +244,7 @@ public class ClassesActivity extends AppCompatActivity {
             eventType = parser.next();
         }
         parser.close();
-
+        */
         /*
         try{
 
