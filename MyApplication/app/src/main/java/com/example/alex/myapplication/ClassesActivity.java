@@ -1,12 +1,14 @@
 package com.example.alex.myapplication;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.content.res.XmlResourceParser;
 import android.os.Bundle;
-import android.support.annotation.XmlRes;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
@@ -17,52 +19,28 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import java.lang.Class;
-import java.util.List;
+import static java.lang.Integer.parseInt;
 
 public class ClassesActivity extends AppCompatActivity {
-    private static final String TAG = "MyActivity";
     private static final String ns = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
-        ArrayList<String> className = new ArrayList<String>();
+        ArrayList<ClassObj> classList = new ArrayList<>();
+        ArrayList<String> className = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_schedule);
-        /*
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            ClassObj c = new ClassObj(extras.getString("className"),extras.getString("startTime"),extras.getStringArrayList("weekDays"));
-            classList.add(c);
-        }*/
-        /*
-        Intent i = getIntent();
-        if(i.getStringExtra("name") != null){
-            for(int j = 0; j < classList.size(); j++){
-                if(classList.get(j).getClassName() == i.getStringExtra("name")){
-                    classList.remove(j);
-                }
-            }
-        }*/
 
         try {
              classList = parseXML(this);
-
         }
 
         catch(XmlPullParserException e){
@@ -74,13 +52,27 @@ public class ClassesActivity extends AppCompatActivity {
         Log.d("ClassList size: ", ""+classList.size());
         for(int  k= 0; k < classList.size(); k++){
             className.add(classList.get(k).getClassName());
-            //className.add(classList.get(k).getClassName());
+            String timeToParse = classList.get(k).getClassTime();
+            String[] hourMin = timeToParse.split(":");
+            ArrayList<String> days = classList.get(k).getWeekDays();
+            final Calendar myCalendar = Calendar.getInstance();
+            myCalendar.set(Calendar.HOUR, parseInt(hourMin[0]));
+            myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
+            myCalendar.set(Calendar.SECOND, 0);
+
+            for(int d = 0; d < days.size(); d++){
+                Log.d("days values:", days.get(d));
+                if(days.get(d).equals("Monday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);}
+                else if(days.get(d).equals("Tuesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);}
+                else if(days.get(d).equals("Wednesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);}
+                else if(days.get(d).equals("Thursday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);}
+                else if(days.get(d).equals("Friday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);}
+                Log.d("Calendar time:", myCalendar.getTime().toString());
+                scheduleNotification(getNotification("Class begins shortly. Click here to get your directions."),myCalendar);
+            }
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, className);
-
-
-
         ListView listView = (ListView) findViewById(R.id.class_list);
 
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -105,6 +97,28 @@ public class ClassesActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+
+    /**
+     * Parses through the classes.xml file and gets the start
+     * @param context
+     */
+    private ArrayList<ClassObj> parseXML(Context context)
+            throws XmlPullParserException, IOException{
+        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
+        try {
+            AssetManager assetManager = this.getAssets();
+            InputStream file = assetManager.open("classes.xml");
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(file, null);
+            parser.nextTag();
+            classList = readClassList(parser);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return classList;
     }
 
     private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
@@ -133,9 +147,6 @@ public class ClassesActivity extends AppCompatActivity {
                 skip(parser);
             }
         }
-        //parser.require(XmlPullParser.END_TAG, ns, "class");
-
-
         return (new ClassObj(className,classTime,days));
     }
 
@@ -187,104 +198,72 @@ public class ClassesActivity extends AppCompatActivity {
         }
         return entries;
     }
-    /**
-     * Parses through the classes.xml file and gets the start
-     * @param context
+
+
+    //Notification functions
+
+    /** This function will set an alarm to push a notification to the user if they wish to be
+     *  notified that their class will be beginning shortly
+     *
+     * @param notification  The notification to be pushed
+     * @param classTime     The time in which the notification will display to the user
      */
-    private ArrayList<ClassObj> parseXML(Context context)
-    throws XmlPullParserException, IOException{
-        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
-        try {
-            AssetManager assetManager = this.getAssets();
-            InputStream file = assetManager.open("classes.xml");
-            //DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-            //DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
-            //document = domBuilder.parse(file);
-
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(file, null);
-            parser.nextTag();
-            classList = readClassList(parser);
+    private void scheduleNotification(Notification notification, Calendar classTime){
+        Date date = new Date();
+        Calendar alarm = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+        now.setTime(date);
+        alarm.setTime(date);
+        alarm.set(Calendar.HOUR_OF_DAY, 5);
+        alarm.set(Calendar.MINUTE, 20);
+        alarm.set(Calendar.SECOND, 0);
+        if (alarm.before(now)){
+            alarm.add(Calendar.DATE, 1);
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return classList;
 
-        /*
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        XmlResourceParser parser = context.getResources().getXml(R.xml.classes);
-        parser.next();
-        eventType = parser.getEventType();
-        while(eventType != XmlPullParser.END_DOCUMENT) {
-            if (eventType == XmlPullParser.START_DOCUMENT) {
-                Log.d(TAG, "Start Doc");
-            }
-
-                if(eventType == XmlPullParser.TEXT ){
-
-                    //Log.d(TAG,parser.getText());
-                    n= parser.getText();
-                    parser.next();
-                    days.add(parser.getText());
-                    parser.next();
-                    days.add(parser.getText());
-                    parser.next();
-                    time = parser.getText();
-                    if(n.startsWith("COMP") || n.startsWith("ELEC") || n.startsWith("BUSI")
-                           ||n.startsWith("comp") || n.startsWith("elec") || n.startsWith("busi") ){
-                        ClassObj c = new ClassObj(n, time, days);
-                        classList.add(c);
-                    }
-
-
-                }
-
-            eventType = parser.next();
-        }
-        parser.close();
-        */
-        /*
-        try{
-
-            InputStream inputFile = context.getResources().openRawResource(R.raw.classes);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
-
-
-            Element el = doc.getElementById("ClassList");
-            NodeList list = el.getElementsByTagName("class");
-            for(int i = 0; i < list.getLength(); i++){
-                Node n = list.item(i);
-                Element e = (Element) n;
-
-                String name = "";
-                String time = "";
-                ArrayList<String> days= new ArrayList<String>();
-
-
-                for(int k =0; k < e.getElementsByTagName("name").getLength(); k++){
-                    name = e.getElementsByTagName("name").item(k).getTextContent();
-                    time = e.getElementsByTagName("startTime").item(k).getTextContent();
-                    days.add(e.getElementsByTagName("day1").item(k).getTextContent());
-                    days.add(e.getElementsByTagName("day2").item(k).getTextContent());
-                }
-
-                ClassObj c = new ClassObj(name, time, days);
-                classList.add(c);
-            }
-
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }*/
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, alarm.getTimeInMillis(), pendingIntent);
     }
 
+    /** Builds the notification using the preferences specified by the user
+     *
+     * @param content   The text of the notification
+     * @return
+     */
+    private Notification getNotification(String content){
+        Notification.Builder builder = new Notification.Builder(this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        builder.setContentTitle("Scheduled Notification");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_stat_new_message)
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setStyle(new Notification.BigTextStyle()
+                        .bigText("Directions")
+                        .setBigContentTitle("NavU")
+                        .setSummaryText("Get Directions to Class"))
+                .setAutoCancel(true)
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0));
 
+        //Setting the type of notification - User may only want vibrate notification and not sound
+        String TAG = "Notification Setting";
+        if(sp.getBoolean("sound", false) && sp.getBoolean("vibrate", false)){
+            Log.d(TAG, "Sound And Vibrate");
+            builder.setDefaults(Notification.DEFAULT_ALL);
+        }
+        else if(sp.getBoolean("vibrate", false)){
+            Log.d(TAG, "Vibrate Only");
+            builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
+        }
+        else if(sp.getBoolean("sound", false)){
+            Log.d(TAG, "Sound Only");
+            builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS);
+        }
 
-
+        return builder.build();
+    }
 }

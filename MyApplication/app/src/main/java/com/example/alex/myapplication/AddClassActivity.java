@@ -138,9 +138,8 @@ public class AddClassActivity extends AppCompatActivity {
         Document document = null;
         try{
             //Load xml
-            String filename = "classes.xml";
             AssetManager assetManager = this.getAssets();
-            InputStream file = assetManager.open(filename);
+            InputStream file = assetManager.open(xmlFile);
             //FileInputStream file= fileDescriptor.createInputStream();
 
             //FileInputStream file = context.openFileInput(xmlFile);
