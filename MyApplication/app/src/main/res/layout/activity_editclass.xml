@@ -39,7 +39,8 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/classNameOutput"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart"
+        android:gravity="start"/>
 
     <Space
         android:layout_width="match_parent"

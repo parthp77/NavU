@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <classList>
     <class>
-        <name>COMP9000</name>
+        <name>COMP9001</name>
         <day1>Monday</day1>
         <day2>Wednesday</day2>
         <startTime>10:05</startTime>
@@ -10,12 +10,24 @@
         <name>COMP3000</name>
         <day1>Tuesday</day1>
         <day2>Thursday</day2>
-        <startTime>10:05</startTime>
+        <startTime>2:35</startTime>
     </class>
     <class>
     <name>ELEC1000</name>
     <day1>Wednesday</day1>
     <day2>Friday</day2>
     <startTime>7:00</startTime>
+    </class>
+    <class>
+        <name>PHYS1004</name>
+        <day1>Monday</day1>
+        <day2>Wednesday</day2>
+        <startTime>11:35</startTime>
+    </class>
+    <class>
+        <name>COMP3004</name>
+        <day1>Tuesday</day1>
+        <day2>Thursday</day2>
+        <startTime>11:35</startTime>
     </class>
 </classList>

@@ -59,6 +59,8 @@ public class ClassesActivity extends AppCompatActivity {
             myCalendar.set(Calendar.HOUR, parseInt(hourMin[0]));
             myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
             myCalendar.set(Calendar.SECOND, 0);
+            if(Calendar.HOUR < 7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
+            else myCalendar.set(Calendar.AM_PM, Calendar.PM);
 
             for(int d = 0; d < days.size(); d++){
                 Log.d("days values:", days.get(d));
@@ -67,6 +69,7 @@ public class ClassesActivity extends AppCompatActivity {
                 else if(days.get(d).equals("Wednesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);}
                 else if(days.get(d).equals("Thursday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);}
                 else if(days.get(d).equals("Friday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);}
+
                 Log.d("Calendar time:", myCalendar.getTime().toString());
                 scheduleNotification(getNotification("Class begins shortly. Click here to get your directions."),myCalendar);
             }

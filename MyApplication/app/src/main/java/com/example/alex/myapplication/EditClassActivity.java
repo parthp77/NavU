@@ -2,35 +2,42 @@ package com.example.alex.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by mikes on 2016-11-14.
  */
 
 public class EditClassActivity extends AppCompatActivity{
+    private static final String ns = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editclass);
+        ArrayList<ClassObj> c = new ArrayList<>();
         Intent intent = getIntent();
         int position = intent.getIntExtra("pos", 0);
         Log.d("MyActivity", ""+position);
         try{
-            parseXML(this, position);
+            c = parseXML(this);
         }
         catch(XmlPullParserException e){
             e.printStackTrace();
@@ -38,6 +45,8 @@ public class EditClassActivity extends AppCompatActivity{
         catch(IOException e){
             e.printStackTrace();
         }
+
+        displayClass(c.get(position));
 
         Button button = (Button) findViewById(R.id.RemoveClass);
 
@@ -51,51 +60,128 @@ public class EditClassActivity extends AppCompatActivity{
         });
 
     }
+    private void displayClass(ClassObj c){
+        EditText className = (EditText)findViewById(R.id.classNameOutput);
+        CheckBox monday = (CheckBox)findViewById(R.id.classMondayOut);
+        CheckBox tuesday = (CheckBox)findViewById(R.id.classTuesdayOut);
+        CheckBox wednesday = (CheckBox)findViewById(R.id.classWednesdayOut);
+        CheckBox thursday = (CheckBox)findViewById(R.id.classThursdayOut);
+        CheckBox friday = (CheckBox)findViewById(R.id.classFridayOut);
+        EditText time = (EditText)findViewById(R.id.StartTimeOutput);
+
+        className.setText(c.getClassName());
+        time.setText(c.getClassTime());
+        ArrayList<String> days = c.getWeekDays();
+        for(int i = 0; i < days.size(); i++){
+            if(days.get(i).equals("Monday")){monday.setChecked(true);}
+            else if(days.get(i).equals("Tuesday")){tuesday.setChecked(true);}
+            else if(days.get(i).equals("Wednesday")){wednesday.setChecked(true);}
+            else if(days.get(i).equals("Thursday")){thursday.setChecked(true);}
+            else if(days.get(i).equals("Friday")){friday.setChecked(true);}
+
+        }
+
+    }
 
     /**
      * This will read the xml and display the previously inputted class details
      * @param context
      */
-    private void parseXML(Context context, int pos)
-        throws XmlPullParserException, IOException{
-            int eventType =-1;
-        XmlResourceParser parser = context.getResources().getXml(R.xml.classes);
-        CheckBox mon = (CheckBox)findViewById(R.id.classMondayOut);
-        CheckBox tues = (CheckBox)findViewById(R.id.classTuesdayOut);
-        CheckBox wed = (CheckBox)findViewById(R.id.classWednesdayOut);
-        CheckBox thu = (CheckBox)findViewById(R.id.classThursdayOut);
-        CheckBox fri = (CheckBox)findViewById(R.id.classFridayOut);
-        parser.next();
-        eventType = parser.getEventType();
-        while (eventType != XmlPullParser.END_DOCUMENT) {
-            for(int i = pos*4; i < pos*4 ; i++){
+    private ArrayList<ClassObj> parseXML(Context context)
+            throws XmlPullParserException, IOException{
+        ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
+        try {
+            AssetManager assetManager = this.getAssets();
+            InputStream file = assetManager.open("classes.xml");
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(file, null);
+            parser.nextTag();
+            classList = readClassList(parser);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return classList;
+    }
 
-                    //Log.d("MyActivity", parser.getText());
-                    EditText nameOut = (EditText)findViewById(R.id.classNameOutput);
-                    nameOut.setText(parser.getText(), TextView.BufferType.EDITABLE);
-                    parser.next();
-
-                    if(parser.getText().equals( "Monday")){ mon.setChecked(true);parser.next();}
-                    if(parser.getText().equals( "Tuesday")){ tues.setChecked(true);parser.next();}
-                    if(parser.getText().equals( "Wednesday")){ wed.setChecked(true);parser.next();}
-                    if(parser.getText().equals(  "Thursday")){ thu.setChecked(true);parser.next();}
-                    if(parser.getText().equals( "Friday")){ fri.setChecked(true);parser.next();}
-
-                    EditText timeOut = (EditText)findViewById(R.id.StartTimeOutput);
-                    timeOut.setText(parser.getText(), TextView.BufferType.EDITABLE);
-                    //parser.next();
-
-
-
+    private ArrayList<ClassObj> readClassList(XmlPullParser parser)throws XmlPullParserException, IOException{
+        ArrayList<ClassObj> entries = new ArrayList<ClassObj>();
+        ClassObj c;
+        int count =0;
+        parser.require(XmlPullParser.START_TAG, ns, "classList");
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name= parser.getName();
+            Log.d("CurrParserName:" , name);
+            if(name.equals("class")){
+                entries.add(readClass(parser));
             }
 
-
-            eventType = parser.next();
-            break;
-
-
+            else{
+                skip(parser);
+            }
         }
-        parser.close();
-
+        return entries;
     }
+
+    private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
+
+        parser.require(XmlPullParser.START_TAG, ns, "class");
+        String className="", classTime = "";
+        ArrayList<String> days = new ArrayList<>();
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name = parser.getName();
+            if(name.equals("name")){
+                className = readText(parser);
+            }
+            else if(name.equals("day1")){
+                days.add(readText(parser));
+            }
+            else if (name.equals("day2")){
+                days.add(readText(parser));
+            }
+            else if (name.equals("startTime")){
+                classTime = readText(parser);
+            }
+            else{
+                skip(parser);
+            }
+        }
+        return (new ClassObj(className,classTime,days));
+    }
+
+
+    private String readText(XmlPullParser parser) throws  XmlPullParserException, IOException{
+        String result = "";
+        if(parser.next() == XmlPullParser.TEXT){
+            result = parser.getText();
+            parser.nextTag();
+        }
+        return result;
+    }
+
+
+    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
+        if (parser.getEventType() != XmlPullParser.START_TAG) {
+            throw new IllegalStateException();
+        }
+        int depth = 1;
+        while (depth != 0) {
+            switch (parser.next()) {
+                case XmlPullParser.END_TAG:
+                    depth--;
+                    break;
+                case XmlPullParser.START_TAG:
+                    depth++;
+                    break;
+            }
+        }
+    }
+
 }

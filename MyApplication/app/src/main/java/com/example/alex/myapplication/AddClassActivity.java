@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -140,9 +142,11 @@ public class AddClassActivity extends AppCompatActivity {
             //Load xml
             AssetManager assetManager = this.getAssets();
             InputStream file = assetManager.open(xmlFile);
-            //FileInputStream file= fileDescriptor.createInputStream();
-
-            //FileInputStream file = context.openFileInput(xmlFile);
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(file, null);
+            parser.nextTag();
+            
             DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
             document = domBuilder.parse(file);
