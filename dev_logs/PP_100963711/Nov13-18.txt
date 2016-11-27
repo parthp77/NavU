@@ -1,0 +1,3 @@
+Monday nov 13:
+  - Implemented string passing from Main Activity to Map Activity
+    to pass user input (room number) to Mapping method
