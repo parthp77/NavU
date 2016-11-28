@@ -35,7 +35,7 @@ public class EditClassActivity extends AppCompatActivity{
         ArrayList<ClassObj> c = new ArrayList<>();
         Intent intent = getIntent();
         int position = intent.getIntExtra("pos", 0);
-        Log.d("MyActivity", ""+position);
+        Log.d("Selected Position", ""+position);
         try{
             c = parseXML(this);
         }
@@ -91,8 +91,7 @@ public class EditClassActivity extends AppCompatActivity{
             throws XmlPullParserException, IOException{
         ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
         try {
-            AssetManager assetManager = this.getAssets();
-            InputStream file = assetManager.open("classes.xml");
+            InputStream file = context.openFileInput("classes.xml");
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(file, null);
@@ -115,7 +114,7 @@ public class EditClassActivity extends AppCompatActivity{
                 continue;
             }
             String name= parser.getName();
-            Log.d("CurrParserName:" , name);
+            //Log.d("CurrParserName:" , name);
             if(name.equals("class")){
                 entries.add(readClass(parser));
             }

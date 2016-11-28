@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MyActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main_menu);

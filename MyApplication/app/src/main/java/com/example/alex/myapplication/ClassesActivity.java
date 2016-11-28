@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,8 +60,8 @@ public class ClassesActivity extends AppCompatActivity {
             myCalendar.set(Calendar.HOUR, parseInt(hourMin[0]));
             myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
             myCalendar.set(Calendar.SECOND, 0);
-            if(Calendar.HOUR < 7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
-            else myCalendar.set(Calendar.AM_PM, Calendar.PM);
+            if(Calendar.HOUR <= 7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
+            else myCalendar.set(Calendar.AM_PM, Calendar.AM);
 
             for(int d = 0; d < days.size(); d++){
                 Log.d("days values:", days.get(d));
@@ -110,8 +111,7 @@ public class ClassesActivity extends AppCompatActivity {
             throws XmlPullParserException, IOException{
         ArrayList<ClassObj> classList = new ArrayList<ClassObj>();
         try {
-            AssetManager assetManager = this.getAssets();
-            InputStream file = assetManager.open("classes.xml");
+            InputStream file = context.openFileInput("classes.xml");
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(file, null);
@@ -188,12 +188,8 @@ public class ClassesActivity extends AppCompatActivity {
                 continue;
             }
             String name= parser.getName();
-            Log.d("CurrParserName:" , name);
             if(name.equals("class")){
                 entries.add(readClass(parser));
-
-                        //.add(readName(parser));
-                //className = readName(parser);
             }
             else{
                 skip(parser);

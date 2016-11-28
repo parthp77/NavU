@@ -17,6 +17,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlPullParser;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
@@ -46,12 +48,6 @@ public class AddClassActivity extends AppCompatActivity {
                 Document myDoc = getDocument(getApplicationContext());
                 c = readInfo();
                 saveInfoToDoc(myDoc, c);
-
-                /*Bundle extras = new Bundle();
-                extras.putString("className", c.getClassName());
-                extras.putStringArrayList("weekDays",c.getWeekDays());
-                extras.putString("startTime", c.getClassTime());*/
-
                 Intent myIntent = new Intent(AddClassActivity.this, ClassesActivity.class);
                 //myIntent.putExtras(extras);
                 startActivity(myIntent);
@@ -138,18 +134,24 @@ public class AddClassActivity extends AppCompatActivity {
     private Document getDocument(Context context){
         //Error is that cannot read from xmlFile, doc is always null
         Document document = null;
+        FileOutputStream fout;
         try{
-            //Load xml
-            AssetManager assetManager = this.getAssets();
-            InputStream file = assetManager.open(xmlFile);
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(file, null);
-            parser.nextTag();
-            
+            File file = new File(getApplicationContext().getFilesDir(), "classes.xml");
             DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
+            if(file.exists())
             document = domBuilder.parse(file);
+
+            else{
+                document = domBuilder.newDocument();
+
+                Element Class = document.createElement("classList");
+                document.appendChild(Class);
+            }
+
+            Log.d("File Size:",""+file.length());
+
+
         }
         catch(Exception e){
             e.printStackTrace();

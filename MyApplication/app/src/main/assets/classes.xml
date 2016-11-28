@@ -13,10 +13,10 @@
         <startTime>2:35</startTime>
     </class>
     <class>
-    <name>ELEC1000</name>
-    <day1>Wednesday</day1>
-    <day2>Friday</day2>
-    <startTime>7:00</startTime>
+        <name>ELEC1000</name>
+        <day1>Wednesday</day1>
+        <day2>Friday</day2>
+        <startTime>7:00</startTime>
     </class>
     <class>
         <name>PHYS1004</name>
