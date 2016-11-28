@@ -47,6 +47,7 @@ public class Building {
             if (node == end) return buildPath(end);
             else
             {
+                Log.d("Visit: ", node.getId());
                 //add current node to the list of visited nodes
                 visitedNodes.add(node);
 

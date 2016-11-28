@@ -1,279 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <building id="HP">
-
-
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!--- Second Floor Nodes -------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-
-    <node>
-        <positionx>0.8071</positionx>
-        <positiony>0.0792</positiony>
-        <id>HP2160</id>
-        <connection>HP2170</connection>
-        <connection>HP2160A</connection>
-        <connection>HP2160B</connection>
-        <connection>HP2160C</connection>
-        <connection>HP2160D</connection>
-    </node>
-    <node>
-        <id>HP2170</id>
-        <positionx>0.8071</positionx>
-        <positiony>0.0941</positiony>
-        <connection>HP2160</connection>
-        <connection>HP2155</connection>
-    </node>
-    <node>
-        <id>HP2155</id>
-        <positionx>0.8071</positionx>
-        <positiony>0.1175</positiony>
-        <connection>HP2170</connection>
-        <connection>HP2140</connection>
-    </node>
-    <node>
-        <id>HP2140</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.1748</positiony>
-        <connection>HP2155</connection>
-        <connection>HP2120</connection>
-        <connection>HP2140A</connection>
-        <connection>HP2140B</connection>
-    </node>
-    <node>
-        <id>HP2120</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.2170</positiony>
-        <connection>HP2140</connection>
-        <connection>HP2130</connection>
-        <connection>HP2120B</connection>
-        <connection>HP2120C</connection>
-    </node>
-    <node>
-        <id>HP2130</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.2423</positiony>
-        <connection>HP2120</connection>
-        <connection>HP2125</connection>
-    </node>
-    <node>
-        <id>HP2125</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.2619</positiony>
-        <connection>HP2130</connection>
-        <connection>HP2118</connection>
-    </node>
-    <node>
-        <id>HP2118</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.2964</positiony>
-        <connection>HP2125</connection>
-        <connection>HP2115A</connection>
-        <connection>HP2120A</connection>
-    </node>
-    <node>
-        <id>HP2115A</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.3044</positiony>
-        <connection>HP2118</connection>
-        <connection>HP2115B</connection>
-        <connection>HP2115C</connection>
-        <connection>HP2115D</connection>
-        <connection>HP2115</connection>
-    </node>
-    <node>
-        <id>HP2115</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.3278</positiony>
-        <connection>HP2115A</connection>
-        <connection>HP2115D</connection>
-        <connection>HP2115C</connection>
-        <connection>HP2115B</connection>
-        <connection>HP2110</connection>
-    </node>
-    <node>
-        <id>HP2110</id>
-        <positionx>0.8070</positionx>
-        <positiony>0.3607</positiony>
-        <connection>HP2115</connection>
-        <connection>HP2106</connection>
-    </node>
-    <node>
-        <id>HP2106</id>
-        <positionx>0.7710</positionx>
-        <positiony>0.3607</positiony>
-        <connection>HP2110</connection>
-        <connection>HP2104</connection>
-    </node>
-    <node>
-        <id>HP2104</id>
-        <positionx>0.6998</positionx>
-        <positiony>0.3607</positiony>
-        <connection>HP2106</connection>
-        <connection>HP2102</connection>
-    </node>
-    <node>
-        <id>HP2102</id>
-        <positionx>0.6461</positionx>
-        <positiony>0.3607</positiony>
-        <connection>HP2104</connection>
-        <connection>HP2201</connection>
-    </node>
-    <node>
-        <id>HP2201</id>
-        <positionx>0.4207</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2102</connection>
-        <connection>HP2203</connection>
-    </node>
-    <node>
-        <id>HP2203</id>
-        <positionx>0.3814</positionx>
-        <position>0.3624</position>
-        <connection>HP2201</connection>
-        <connection>HP2205</connection>
-    </node>
-    <node>
-        <id>HP2205</id>
-        <positionx>0.3405</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2203</connection>
-        <connection>HP2217</connection>
-        <connection>HP2220</connection>
-    </node>
-    <node>
-      <id>HP2217</id>
-      <positionx>0.3028</positionx>
-      <positiony>0.3624</positiony>
-      <connection>HP2205</connection>
-      <connection>HP2220</connection>
-      <connection>HP2221</connection>
-    </node>
-    <node>
-      <id>HP2220</id>
-      <positionx>0.3</positionx>
-      <positiony>0.3624</positiony>
-      <connection>HP2217</connection>
-      <connection>HP2221</connection>
-    </node>
-    <node>
-      <id>HP2221</id>
-      <positionx>0.2619</positionx>
-      <positiony>0.3624</positiony>
-      <connection>HP2217</connection>
-      <connection>HP2229</connection>
-    </node>
-    <node>
-      <id>HP2229</id>
-      <positionx>0.2226</positionx>
-      <positiony>0.3624</positiony>
-      <connection>HP2221</connection>
-      <connection>HP2230</connection>
-      <connection>HP2239</connection>
-    </node>
-    <node>
-      <id>HP2230</id>
-      <positionx>0.22</positionx>
-      <positiony>0.3624</positiony>
-      <connection>HP2229</connection>
-    </node>
-    <node>
-        <id>HP2239</id>
-        <positionx>0.1835</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2240</connection>
-        <connection>HP2229</connection>
-        <connection>HP2249</connection>
-    </node>
-    <node>
-        <id>HP2240</id>
-        <positionx>0.1839</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2239</connection>
-    </node>
-    <node>
-        <id>HP2249</id>
-        <positionx>0.1432</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2239</connection>
-        <connection>HP2250</connection>
-        <connection>HP2259</connection>
-    </node>
-    <node>
-        <id>HP2250</id>
-        <positionx>0.1429</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2249</connection>
-    </node>
-    <node>
-        <id>HP2259</id>
-        <positionx>0.1067</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2249</connection>
-        <connection>HP2260</connection>
-        <connection>HP2269</connection>
-    </node>
-    <node>
-        <id>HP2260</id>
-        <positionx>0.1060</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2259</connection>
-    </node>
-    <node>
-        <id>HP2269</id>
-        <positionx>0.068</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2259</connection>
-        <connection>HP2270</connection>
-        <connection>HP2279</connection>
-    </node>
-    <node>
-        <id>HP2270</id>
-        <positionx>0.0675</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2269</connection>
-    </node>
-    <node>
-        <id>HP2279</id>
-        <positionx>0.2777</positionx>
-        <positiony>0.3624</positiony>
-        <connection>HP2269</connection>
-    </node>
-    <node>
-        <id>C201</id>
-        <positionx>0.4651</positionx>
-        <positiony>0.3624</positiony>
-        <connection>C202</connection>
-        <connection>HP2201</connection>
-    </node>
-    <node>
-        <id>C202</id>
-        <positionx>0.6111</positionx>
-        <positiony>0.3624</positiony>
-        <connection>C201</connection>
-        <connection>HP2102</connection>
-    </node>
-    <node>
-        <id>HP2390</id>
-        <positionx>0.4640</positionx>
-        <positiony>0.6895</positiony>
-        <connection>HP2385</connection>
-        <connection>HP2380</connection>
-        <connection>C201</connection>
-    </node>
-    <node>
-        <id>HP2385</id>
-
-    </node>
-
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!--- Third Floor Nodes --------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-
+    <floorcount>5</floorcount>
     <node>
         <positionx>0.7537</positionx>
         <positiony>0.0744</positiony>
@@ -503,17 +231,20 @@
         <id>C307</id>
         <connection>HP3393</connection>
         <connection>C304</connection>
+		<connection>C342</connection>
     </node>
     <node>
         <positionx>0.6037</positionx>
         <positiony>0.5863</positiony>
         <id>C306</id>
         <connection>C305</connection>
+		<connection>HP3304</connection>
+		<connection>HP3310</connection>
     </node>
 	<node>
 		<positionx>0.6598</positionx>
 		<positiony>0.5863</positiony>
-		<id>HP3304></id>
+		<id>HP3304</id>
 		<connection>C306</connection>
 		<connection>HP3313</connection>
 		<connection>HP3314</connection>
@@ -521,7 +252,7 @@
 	<node>
 		<positionx>0.6598</positionx>
 		<positiony>0.5863</positiony>
-		<id>HP3310></id>
+		<id>HP3310</id>
 		<connection>C306</connection>
 		<connection>HP3313</connection>
 		<connection>HP3314</connection>
@@ -529,7 +260,7 @@
 	<node>
 		<positionx>0.6598</positionx>
 		<positiony>0.6263</positiony>
-		<id>HP3313></id>
+		<id>HP3313</id>
 		<connection>HP3304</connection>
 		<connection>HP3310</connection>
 		<connection>HP3315</connection>
@@ -537,7 +268,7 @@
 	<node>
 		<positionx>0.6598</positionx>
 		<positiony>0.6263</positiony>
-		<id>HP3314></id>
+		<id>HP3314</id>
 		<connection>HP3304</connection>
 		<connection>HP3310</connection>
 		<connection>HP3315</connection>
@@ -634,6 +365,7 @@
 		<id>C312</id>
 		<connection>C311</connection>
 		<connection>C313</connection>
+		<connection>C321</connection>
 	</node>
 	<node>
 		<positionx>0.8097</positionx>
@@ -661,6 +393,7 @@
 		<id>C314</id>
 		<connection>C313</connection>
 		<connection>HP3412</connection>
+		<connection>C315</connection>
 	</node>
 	<node>
 		<positionx>0.8097</positionx>
@@ -747,7 +480,7 @@
 		<connection>C322</connection>
 	</node>
 	<node>
-		<positionx></positionx>
+		<positionx>0.7</positionx>
 		<positiony>0.9418</positiony>
 		<id>C322</id>
 		<connection>C321</connection>
@@ -792,9 +525,6 @@
 		<positiony>0.8083</positiony>
 		<id>S36</id>
 		<connection>C323</connection>
-		<connection>S26</connection>
-		<connection>S46</connection>
-		<connection>S56</connection>
 	</node>
 	<node>
 		<positionx>0.5731</positionx>
@@ -1080,23 +810,11 @@
 		<positiony>0.5042</positiony>
 		<id>S35</id>
 		<connection>C344</connection>
-		<connection>S25</connection>
-		<connection>S45</connection>
-		<connection>S55</connection>
 	</node>
 	<node>
 		<positionx>0.4914</positionx>
 		<positiony>0.5719</positiony>
 		<id>HP3390</id>
 		<connection>C307</connection>
-	</node>	
-
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!--- Fourth Floor Nodes -------------------------------------------------->
-<!------------------------------------------------------------------------->
-<!------------------------------------------------------------------------->
-
-
-
+	</node>
 </building>

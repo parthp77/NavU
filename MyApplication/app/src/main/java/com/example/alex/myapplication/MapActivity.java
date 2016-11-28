@@ -37,7 +37,7 @@ public class MapActivity extends AppCompatActivity {
         map = new Drawable[building.getNumFloors()];
 
         route = building.plotCourse(building.findNode(0,0), building.getNodeById(roomString));
-        currentFloor = route.get(0).getFloor();
+        if (route.size() > 0) currentFloor = route.get(0).getFloor();
 
         setContentView(new MyView(this));
     }
@@ -78,7 +78,6 @@ public class MapActivity extends AppCompatActivity {
 
     public static Drawable getDrawable(String name, Context context) {
         int resourceId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-        Log.d("the id", String.valueOf(resourceId));
         return context.getResources().getDrawable(resourceId);
     }
 
