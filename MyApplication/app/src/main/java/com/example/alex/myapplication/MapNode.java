@@ -30,6 +30,8 @@ public class MapNode {
         parent = null;
     }
 
+    public int getFloor() { return Integer.parseInt(id.substring(2,3)); }
+
     public float getX()
     {
         return x;

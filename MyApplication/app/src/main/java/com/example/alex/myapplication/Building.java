@@ -22,6 +22,10 @@ public class Building {
     //list of nodes in the building
     private ArrayList<MapNode> mapNodes = new ArrayList<MapNode>();
 
+    private int numFloors;
+
+    public int getNumFloors() { return numFloors; }
+
     //constructor, a room ID (for determing what building to load)
     public Building(Context context, String init)
     {
@@ -131,6 +135,8 @@ public class Building {
             doc.getDocumentElement().normalize();
             //find the element corresponding to the building we're interested in
             Element ele = doc.getElementById(building);
+            NodeList fc = ele.getElementsByTagName("floorcount");
+            numFloors = Integer.parseInt(fc.item(0).getTextContent());
             //find all elements in that building
             NodeList nList = ele.getElementsByTagName("node");
             for (int i=0; i < nList.getLength(); i++)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <building id="HP">
+    <floorcount>5</floorcount>
     <node>
         <positionx>0.7537</positionx>
         <positiony>0.0744</positiony>

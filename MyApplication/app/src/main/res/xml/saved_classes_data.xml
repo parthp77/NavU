@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<classes id="classList">
+    <class>
+        <className>Class 1</className>
+        <startTime>12:00</startTime>
+        <ampm>PM</ampm>
+        <id>class1</id>
+        <classMonday>False</classMonday>
+        <classTuesday>False</classTuesday>
+        <classWednesday>False</classWednesday>
+        <classThursday>False</classThursday>
+        <classFriday>False</classFriday>
+    </class>
+
+    <class>
+        <className>Class 2</className>
+        <startTime>12:00</startTime>
+        <ampm>PM</ampm>
+        <id>class2</id>
+        <classMonday>False</classMonday>
+        <classTuesday>False</classTuesday>
+        <classWednesday>False</classWednesday>
+        <classThursday>False</classThursday>
+        <classFriday>False</classFriday>
+    </class>
+
+    <class>
+        <className>Class 3</className>
+        <startTime>12:00</startTime>
+        <ampm>PM</ampm>
+        <id>class3</id>
+        <classMonday>False</classMonday>
+        <classTuesday>False</classTuesday>
+        <classWednesday>False</classWednesday>
+        <classThursday>False</classThursday>
+        <classFriday>False</classFriday>
+    </class>
+
+    <class>
+        <className>Class 4</className>
+        <startTime>12:00</startTime>
+        <ampm>PM</ampm>
+        <id>class4</id>
+        <classMonday>False</classMonday>
+        <classTuesday>False</classTuesday>
+        <classWednesday>False</classWednesday>
+        <classThursday>False</classThursday>
+        <classFriday>False</classFriday>
+    </class>
+
+    <class>
+        <className>Class 5</className>
+        <startTime>12:00</startTime>
+        <ampm>PM</ampm>
+        <id>class5</id>
+        <classMonday>False</classMonday>
+        <classTuesday>False</classTuesday>
+        <classWednesday>False</classWednesday>
+        <classThursday>False</classThursday>
+        <classFriday>False</classFriday>
+    </class>
+
+</classes>
