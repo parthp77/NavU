@@ -50,7 +50,7 @@ public class Building {
                 //Log.d("Visit: ", node.getId());
                 //add current node to the list of visited nodes
                 visitedNodes.add(node);
-
+                Log.d("Visiting: ", node.getId());
                 for (int i=0; i < node.connections.size(); i++)
                 {
                     //add each unvisited node to the list of visited and add each to the list of branches to search

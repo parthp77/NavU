@@ -25,12 +25,15 @@ public class MapActivity extends AppCompatActivity {
     ArrayList<MapNode> route;
     private Drawable[] map;
     private int currentFloor;
-    String build;
+    private String build;
+    private int stair;
+    private boolean startFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startFloor = true;
         //getting room string from main activity's editText
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
@@ -39,8 +42,9 @@ public class MapActivity extends AppCompatActivity {
 
         map = new Drawable[building.getNumFloors()];
 
-        route = building.plotCourse(building.findNode(0,0), building.getNodeById(roomString));
-        if (route.size() > 0) currentFloor = route.get(0).getFloor();
+        route = building.plotCourse(building.getNodeById("HP3201"), building.getNodeById(roomString));
+        if (route.size() > 0) currentFloor = route.get(route.size()-1).getFloor();
+        for (int i=0; i < route.size(); i++) if (route.get(i).getId().charAt(0) == 'S') stair = i;
 
         MyView v = new MyView(this);
         v.setOnTouchListener(new MyView.OnTouchListener() {
@@ -48,8 +52,16 @@ public class MapActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (currentFloor == 3) currentFloor = 2;
-                    else currentFloor = 3;
+                    if (currentFloor == 3)
+                    {
+                        currentFloor = 2;
+                        startFloor = false;
+                    }
+                    else
+                    {
+                        currentFloor = 3;
+                        startFloor = true;
+                    }
                     v.invalidate();
                 }
 
@@ -87,9 +99,16 @@ public class MapActivity extends AppCompatActivity {
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(10);
             p.setColor(Color.RED);
-            for (int i=0; i < route.size()-1; i++)
+            if (!startFloor) {
+                for (int i = 0; i < stair; i++) {
+                    canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);
+                }
+            }
+            else
             {
-                canvas.drawLine(route.get(i).getX()*getWidth(), route.get(i).getY()*getHeight(), route.get(i+1).getX()*getWidth(), route.get(i+1).getY()*getHeight(), p);
+                for (int i = stair; i < route.size() - 1; i++) {
+                    canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);
+                }
             }
         }
     }

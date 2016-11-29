@@ -73,9 +73,6 @@
         <positionx>0.8070</positionx>
         <positiony>0.3044</positiony>
         <connection>HP2118</connection>
-        <connection>HP2115B</connection>
-        <connection>HP2115C</connection>
-        <connection>HP2115D</connection>
         <connection>HP2115</connection>
     </node>
     <node>
@@ -83,9 +80,6 @@
         <positionx>0.8070</positionx>
         <positiony>0.3278</positiony>
         <connection>HP2115A</connection>
-        <connection>HP2115D</connection>
-        <connection>HP2115C</connection>
-        <connection>HP2115B</connection>
         <connection>HP2110</connection>
     </node>
     <node>
@@ -126,7 +120,7 @@
     <node>
         <id>HP2203</id>
         <positionx>0.3814</positionx>
-        <position>0.3624</position>
+        <positiony>0.3624</positiony>
         <connection>HP2201</connection>
         <connection>HP2205</connection>
     </node>
@@ -256,13 +250,14 @@
         <positiony>0.3618</positiony>
         <connection>C201</connection>
 		<connection>C204</connection>
-		<connection>S25<connection>
+		<connection>S25</connection>
     </node>
 	<node>
         <id>S25</id>
         <positionx>0.4101</positionx>
         <positiony>0.4859</positiony>
 		<connection>C203</connection>
+        <connection>S35</connection>
     </node>
 	<node>
         <id>HP2385</id>
@@ -274,7 +269,7 @@
 	<node>
         <id>HP2387</id>
 		<positionx>0.5147</positionx>
-        <positiony></positiony>
+        <positiony>0.5396</positiony>
 		<connection>HP2385</connection>
     </node>
     <node>
@@ -546,6 +541,7 @@
 		<positionx>0.6062</positionx>
         <positiony>0.8580</positiony>
 		<connection>HP2340</connection>
+        <connection>S36</connection>
 		<connection>C212</connection>
 		<connection>C214</connection>
     </node>		
@@ -744,7 +740,7 @@
 		<positionx>0.7924</positionx>
         <positiony>0.8593</positiony>
 		<connection>C227</connection>
-		<connection>C214<connection>
+		<connection>C214</connection>
 		<connection>HP2404</connection>
     </node>		
 	<node>
@@ -1145,6 +1141,7 @@
 		<positiony>0.8017</positiony>
 		<id>C310</id>
 		<connection>HP3332</connection>
+        <connection>S36</connection>
 		<connection>C311</connection>
 	</node>
 	<node>
@@ -1319,7 +1316,9 @@
 		<positionx>0.5926</positionx>
 		<positiony>0.8083</positiony>
 		<id>S36</id>
+        <connection>S26</connection>
 		<connection>C323</connection>
+        <connection>C310</connection>
 	</node>
 	<node>
 		<positionx>0.5731</positionx>
@@ -1604,6 +1603,7 @@
 		<positionx>0.4085</positionx>
 		<positiony>0.5042</positiony>
 		<id>S35</id>
+        <connection>S25</connection>
 		<connection>C344</connection>
 	</node>
 	<node>
