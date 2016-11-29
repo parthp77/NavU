@@ -38,17 +38,29 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/text_edit_room"
-        android:hint=" ⌕ Search (Room#, Building)"
-        android:gravity="center"
+        android:id="@+id/text_edit_start_room"
+        android:hint=" ⌕ Start Room"
         android:background="@color/grey"
         android:textSize="18sp"
         android:elegantTextHeight="false"
         android:layout_height="48dp"
-        android:layout_width="245dp"
+        android:layout_width="120dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginTop="-250dp"
-        android:layout_below="@+id/image_raven"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/image_raven" />
+
+    <EditText
+        android:id="@+id/text_edit_end_room"
+        android:hint=" ⌕ End Room"
+        android:background="@color/grey"
+        android:textSize="18sp"
+        android:elegantTextHeight="false"
+        android:layout_height="48dp"
+        android:layout_width="120dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="-250dp"
+        android:layout_below="@+id/image_raven" />
 
     <ImageView
         android:id="@+id/image_raven"
@@ -64,9 +76,10 @@
         android:text="@string/button_find"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_edit_room"
+        android:layout_below="@+id/text_edit_start_room"
         android:layout_alignLeft="@+id/button_about"
-        android:layout_alignStart="@+id/button_about" />
+        android:layout_alignStart="@+id/button_about"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

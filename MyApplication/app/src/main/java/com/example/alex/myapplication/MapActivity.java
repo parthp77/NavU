@@ -37,12 +37,17 @@ public class MapActivity extends AppCompatActivity {
         //getting room string from main activity's editText
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
+        String startRoom = intent.getExtras().getString("startRoom");
         build = roomString.substring(0,2);
         building = new Building(this, build);
 
         map = new Drawable[building.getNumFloors()];
 
-        route = building.plotCourse(building.getNodeById("HP3201"), building.getNodeById(roomString));
+        if (startRoom == null)
+            route = building.plotCourse(building.getNodeById("HP3341"), building.getNodeById(roomString));
+        else
+            route = building.plotCourse(building.getNodeById(startRoom), building.getNodeById(roomString));
+
         if (route.size() > 0) currentFloor = route.get(route.size()-1).getFloor();
         for (int i=0; i < route.size(); i++) if (route.get(i).getId().charAt(0) == 'S') stair = i;
 
@@ -55,17 +60,15 @@ public class MapActivity extends AppCompatActivity {
                     if (currentFloor == 3)
                     {
                         currentFloor = 2;
-                        startFloor = false;
+                        startFloor = !startFloor;
                     }
                     else
                     {
                         currentFloor = 3;
-                        startFloor = true;
+                        startFloor = !startFloor;
                     }
                     v.invalidate();
                 }
-
-                Log.d("touch", String.valueOf(currentFloor));
                 return true;
             }
         });
@@ -99,6 +102,8 @@ public class MapActivity extends AppCompatActivity {
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(10);
             p.setColor(Color.RED);
+            Log.d("Current Floor ", String.valueOf(currentFloor));
+            Log.d("Startfloor? ", String.valueOf(startFloor));
             if (!startFloor) {
                 for (int i = 0; i < stair; i++) {
                     canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);

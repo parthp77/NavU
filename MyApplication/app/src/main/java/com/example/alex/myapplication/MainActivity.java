@@ -73,10 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(MainActivity.this,
                         MapActivity.class);
 
-                EditText searchBar = (EditText) findViewById(R.id.text_edit_room);
-                String roomString = searchBar.getText().toString();
+                EditText searchBar = (EditText) findViewById(R.id.text_edit_end_room);
+                String end = searchBar.getText().toString();
+                EditText startBar = (EditText) findViewById(R.id.text_edit_start_room);
+                String start = startBar.getText().toString();
 
-                myIntent.putExtra("roomString", roomString);
+                myIntent.putExtra("roomString", end);
+                myIntent.putExtra("startRoom", start);
                 startActivity(myIntent);
             }
         });

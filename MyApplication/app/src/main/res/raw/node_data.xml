@@ -9,10 +9,6 @@
         <positiony>0.0792</positiony>
         <id>HP2160</id>
         <connection>HP2170</connection>
-        <connection>HP2160A</connection>
-        <connection>HP2160B</connection>
-        <connection>HP2160C</connection>
-        <connection>HP2160D</connection>
     </node>
     <node>
         <id>HP2170</id>
@@ -34,8 +30,6 @@
         <positiony>0.1748</positiony>
         <connection>HP2155</connection>
         <connection>HP2120</connection>
-        <connection>HP2140A</connection>
-        <connection>HP2140B</connection>
     </node>
     <node>
         <id>HP2120</id>
@@ -43,8 +37,6 @@
         <positiony>0.2170</positiony>
         <connection>HP2140</connection>
         <connection>HP2130</connection>
-        <connection>HP2120B</connection>
-        <connection>HP2120C</connection>
     </node>
     <node>
         <id>HP2130</id>
@@ -66,7 +58,6 @@
         <positiony>0.2964</positiony>
         <connection>HP2125</connection>
         <connection>HP2115A</connection>
-        <connection>HP2120A</connection>
     </node>
     <node>
         <id>HP2115A</id>
@@ -109,6 +100,7 @@
         <positiony>0.3607</positiony>
         <connection>HP2104</connection>
         <connection>HP2201</connection>
+        <connection>C202</connection>
     </node>
     <node>
         <id>HP2201</id>
@@ -242,6 +234,7 @@
         <positionx>0.6111</positionx>
         <positiony>0.3624</positiony>
         <connection>C201</connection>
+        <connection>C233</connection>
         <connection>HP2102</connection>
     </node>
 	<node>
@@ -445,6 +438,7 @@
 		<connection>HP2335</connection>
 		<connection>HP2336</connection>
 		<connection>C229</connection>
+        <connection>C212</connection>
     </node>
 	<node>
         <id>C229</id>
@@ -496,7 +490,6 @@
         <id>HP2301</id>
 		<positionx>0.5915</positionx>
         <positiony>0.5409</positiony>
-		<connection>HP2301</connection>
 		<connection>C233</connection>
     </node>
 	<node>
