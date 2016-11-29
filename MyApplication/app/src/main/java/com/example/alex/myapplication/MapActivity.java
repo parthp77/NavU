@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
@@ -39,7 +40,22 @@ public class MapActivity extends AppCompatActivity {
         route = building.plotCourse(building.findNode(0,0), building.getNodeById(roomString));
         if (route.size() > 0) currentFloor = route.get(0).getFloor();
 
-        setContentView(new MyView(this));
+        MyView v = new MyView(this);
+        v.setOnTouchListener(new MyView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (currentFloor == 3) currentFloor = 2;
+                    else currentFloor = 3;
+                    v.invalidate();
+                }
+
+                Log.d("touch", String.valueOf(currentFloor));
+                return true;
+            }
+        });
+        setContentView(v);
     }
 
     public class MyView extends View
@@ -67,7 +83,7 @@ public class MapActivity extends AppCompatActivity {
             if (route == null) return;
             Paint p = new Paint();
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(5);
+            p.setStrokeWidth(10);
             p.setColor(Color.RED);
             for (int i=0; i < route.size()-1; i++)
             {
