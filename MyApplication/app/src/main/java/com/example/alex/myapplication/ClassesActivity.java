@@ -1,5 +1,6 @@
 package com.example.alex.myapplication;
 
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -8,9 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +34,8 @@ public class ClassesActivity extends AppCompatActivity {
     private static final String ns = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
         ArrayList<ClassObj> classList = new ArrayList<>();
         ArrayList<String> className = new ArrayList<>();
         super.onCreate(savedInstanceState);
@@ -49,29 +54,6 @@ public class ClassesActivity extends AppCompatActivity {
         Log.d("ClassList size: ", ""+classList.size());
         for(int  k= 0; k < classList.size(); k++){
             className.add(classList.get(k).getClassName());
-            String timeToParse = classList.get(k).getClassTime();
-            String[] hourMin = timeToParse.split(":");
-            String classRoom = classList.get(k).getRoom();
-            ArrayList<String> days = classList.get(k).getWeekDays();
-            final Calendar myCalendar = Calendar.getInstance();
-            myCalendar.set(Calendar.HOUR, parseInt(hourMin[0]));
-            myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
-            myCalendar.set(Calendar.SECOND, 0);
-            myCalendar.set(Calendar.AM_PM, Calendar.PM);
-            //if(Calendar.HOUR <= 7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
-            //else myCalendar.set(Calendar.AM_PM, Calendar.AM);
-
-            for(int d = 0; d < days.size(); d++){
-                Log.d("days values:", days.get(d));
-                if(days.get(d).equals("Monday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);}
-                else if(days.get(d).equals("Tuesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);}
-                else if(days.get(d).equals("Wednesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);}
-                else if(days.get(d).equals("Thursday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);}
-                else if(days.get(d).equals("Friday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);}
-
-                Log.d("Calendar time:", myCalendar.getTime().toString());
-                scheduleNotification(getNotification("Class begins shortly. Click here to get your directions.",classRoom),myCalendar);
-            }
         }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, className);
@@ -81,8 +63,6 @@ public class ClassesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long l) {
                 Object selectedItem = adapter.getItemAtPosition(position);
-
-
                 Intent intent = new Intent(ClassesActivity.this, ViewClassActivity.class);
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -100,6 +80,14 @@ public class ClassesActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

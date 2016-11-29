@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AddClassActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:theme="@android:style/Theme.Holo.Light">
 
     <Space
         android:layout_width="match_parent"

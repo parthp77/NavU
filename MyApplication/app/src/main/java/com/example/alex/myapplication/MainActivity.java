@@ -1,5 +1,6 @@
 package com.example.alex.myapplication;
 
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -9,9 +10,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.DateTimeKeyListener;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Intent;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_main_menu);
         final Calendar myCalendar = Calendar.getInstance();
@@ -87,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //Notification functions
 

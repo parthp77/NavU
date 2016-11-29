@@ -17,15 +17,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".ClassesActivity" />
-        <activity android:name=".MapActivity" />
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".ClassesActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alex.myapplication.MainActivity"/>
+        </activity>
+        <activity android:name=".MapActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <receiver android:name=".NotificationPublisher" />
 
-        <activity android:name=".AddClassActivity" />
-        <activity android:name=".ViewClassActivity" />
+        <activity android:name=".AddClassActivity"
+            android:parentActivityName=".ClassesActivity"/>
+        <activity android:name=".ViewClassActivity"
+            android:parentActivityName=".ClassesActivity"/>
     </application>
 
 </manifest>

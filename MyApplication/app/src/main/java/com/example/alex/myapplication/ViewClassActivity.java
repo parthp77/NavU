@@ -1,11 +1,14 @@
 package com.example.alex.myapplication;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,9 +31,11 @@ public class ViewClassActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editclass);
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
         ArrayList<ClassObj> c = new ArrayList<>();
         Intent intent = getIntent();
-        int position = intent.getIntExtra("pos", 0);
+        final int position = intent.getIntExtra("pos", 0);
         Log.d("Selected Position", ""+position);
         try{
             c = parseXML(this);
@@ -50,11 +55,33 @@ public class ViewClassActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent myIntent = new Intent(ViewClassActivity.this,
                         ClassesActivity.class);
+                //myIntent.putExtra("cToHide", position);
+
                 //myIntent.putExtra("name", ((EditText)findViewById(R.id.classNameOutput)).getText().toString());
                 startActivity(myIntent);
             }
         });
 
+    }
+
+    private int removeClass(ClassObj c){
+        ArrayList<ClassObj> classList= new ArrayList<>();
+        try{
+            parseXML(this);
+        }
+        catch(XmlPullParserException e){
+            e.printStackTrace();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < classList.size(); i++){
+            if(c.equals(classList.get(i)));
+            return i;
+        }
+
+        return 0;
     }
     private void displayClass(ClassObj c){
         EditText className = (EditText)findViewById(R.id.classNameOutput);
@@ -182,6 +209,15 @@ public class ViewClassActivity extends AppCompatActivity{
                     break;
             }
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
