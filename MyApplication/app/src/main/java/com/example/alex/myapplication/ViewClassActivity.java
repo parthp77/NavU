@@ -2,8 +2,6 @@ package com.example.alex.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -26,7 +22,7 @@ import java.util.ArrayList;
  * Created by mikes on 2016-11-14.
  */
 
-public class EditClassActivity extends AppCompatActivity{
+public class ViewClassActivity extends AppCompatActivity{
     private static final String ns = null;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,7 +48,7 @@ public class EditClassActivity extends AppCompatActivity{
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(EditClassActivity.this,
+                Intent myIntent = new Intent(ViewClassActivity.this,
                         ClassesActivity.class);
                 //myIntent.putExtra("name", ((EditText)findViewById(R.id.classNameOutput)).getText().toString());
                 startActivity(myIntent);
@@ -62,6 +58,7 @@ public class EditClassActivity extends AppCompatActivity{
     }
     private void displayClass(ClassObj c){
         EditText className = (EditText)findViewById(R.id.classNameOutput);
+        EditText classRoom = (EditText)findViewById(R.id.classRoomOutput);
         CheckBox monday = (CheckBox)findViewById(R.id.classMondayOut);
         CheckBox tuesday = (CheckBox)findViewById(R.id.classTuesdayOut);
         CheckBox wednesday = (CheckBox)findViewById(R.id.classWednesdayOut);
@@ -70,6 +67,7 @@ public class EditClassActivity extends AppCompatActivity{
         EditText time = (EditText)findViewById(R.id.StartTimeOutput);
 
         className.setText(c.getClassName());
+        classRoom.setText(c.getRoom());
         time.setText(c.getClassTime());
         ArrayList<String> days = c.getWeekDays();
         for(int i = 0; i < days.size(); i++){
@@ -129,7 +127,7 @@ public class EditClassActivity extends AppCompatActivity{
     private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
 
         parser.require(XmlPullParser.START_TAG, ns, "class");
-        String className="", classTime = "";
+        String className="", classTime = "", room="";
         ArrayList<String> days = new ArrayList<>();
         while(parser.next() != XmlPullParser.END_TAG){
             if(parser.getEventType() != XmlPullParser.START_TAG){
@@ -148,11 +146,14 @@ public class EditClassActivity extends AppCompatActivity{
             else if (name.equals("startTime")){
                 classTime = readText(parser);
             }
+            else if (name.equals("roomString")){
+                room = readText(parser);
+            }
             else{
                 skip(parser);
             }
         }
-        return (new ClassObj(className,classTime,days));
+        return (new ClassObj(className,classTime,days,room));
     }
 
 

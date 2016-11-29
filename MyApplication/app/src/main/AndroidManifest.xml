@@ -25,7 +25,7 @@
         <receiver android:name=".NotificationPublisher" />
 
         <activity android:name=".AddClassActivity" />
-        <activity android:name=".EditClassActivity" />
+        <activity android:name=".ViewClassActivity" />
     </application>
 
 </manifest>

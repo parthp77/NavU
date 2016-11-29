@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".EditClassActivity"
+    tools:context=".ViewClassActivity"
     android:weightSum="1">
 
     <Space
@@ -13,7 +13,7 @@
         android:layout_weight="0.03" />
 
     <TextView
-        android:text="Edit Class"
+        android:text="View Class"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
@@ -39,6 +39,21 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/classNameOutput"
+        android:textAlignment="viewStart"
+        android:gravity="start"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   Room Number"
+        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/classRoomOutput"
         android:textAlignment="viewStart"
         android:gravity="start"/>
 

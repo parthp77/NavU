@@ -37,9 +37,8 @@ public class AddClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addclass);
-        Log.d("MYTAG", getFilesDir().toString());
-
-
+        Intent intent = getIntent();
+        final int size = intent.getIntExtra("size", 0);
         Button b = (Button) findViewById(R.id.AddClassToList);
         b.setOnClickListener(new OnClickListener(){
             public void onClick(View view)
@@ -47,9 +46,8 @@ public class AddClassActivity extends AppCompatActivity {
 
                 Document myDoc = getDocument(getApplicationContext());
                 c = readInfo();
-                saveInfoToDoc(myDoc, c);
+                saveInfoToDoc(myDoc, c, size);
                 Intent myIntent = new Intent(AddClassActivity.this, ClassesActivity.class);
-                //myIntent.putExtras(extras);
                 startActivity(myIntent);
             }
 
@@ -60,7 +58,7 @@ public class AddClassActivity extends AppCompatActivity {
         String className = ((EditText) findViewById(R.id.classNameInput)).getText().toString();
         ArrayList<String> days = new ArrayList<String>();
         String startTime = ((EditText) findViewById(R.id.editText2)).getText().toString();
-
+        String roomString  =((EditText)findViewById(R.id.classRoomInput)).getText().toString();
         CheckBox checkBox = (CheckBox) findViewById(R.id.classMonday);
         if (checkBox.isChecked())
             days.add("Monday");
@@ -76,23 +74,10 @@ public class AddClassActivity extends AppCompatActivity {
         checkBox = (CheckBox) findViewById(R.id.classFriday);
         if (checkBox.isChecked())
             days.add("Friday");
-        return new ClassObj(className, startTime, days);
+        return new ClassObj(className, startTime, days, roomString);
     }
 
-
-        /*
-        //Save xml to file
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        transformer.transform(new DOMSource(document), new StreamResult(file));
-
-        SharedPreferences sp = getPreferences(classes);
-        SharedPreferences.Editor prefEditor = sp.edit();
-        prefEditor.putString("", "");
-        prefEditor.apply();
-        */
-    private void saveInfoToDoc(Document xmlDoc, ClassObj c){
+    private void saveInfoToDoc(Document xmlDoc, ClassObj c, int position){
         //Appends the information to a new Element
         Element Class = xmlDoc.getDocumentElement();
         Element newClass = xmlDoc.createElement("class");
@@ -100,6 +85,8 @@ public class AddClassActivity extends AppCompatActivity {
         Element newDay1 = xmlDoc.createElement("day1");
         Element newDay2 = xmlDoc.createElement("day2");
         Element StartTime = xmlDoc.createElement("startTime");
+        Element roomString = xmlDoc.createElement("roomString");
+
 
         ArrayList<String> days = new ArrayList<>();
         days = c.getWeekDays();
@@ -107,11 +94,14 @@ public class AddClassActivity extends AppCompatActivity {
         newDay1.appendChild(xmlDoc.createTextNode(days.get(0)));
         newDay2.appendChild(xmlDoc.createTextNode(days.get(1)));
         StartTime.appendChild(xmlDoc.createTextNode(c.getClassTime()));
+        roomString.appendChild(xmlDoc.createTextNode(c.getRoom()));
 
         newClass.appendChild(newName);
         newClass.appendChild(newDay1);
         newClass.appendChild(newDay2);
         newClass.appendChild(StartTime);
+        newClass.appendChild(roomString);
+
         Class.appendChild(newClass);
 
         //Save to xml
@@ -132,36 +122,24 @@ public class AddClassActivity extends AppCompatActivity {
      * @return
      */
     private Document getDocument(Context context){
-        //Error is that cannot read from xmlFile, doc is always null
         Document document = null;
-        FileOutputStream fout;
         try{
             File file = new File(getApplicationContext().getFilesDir(), "classes.xml");
             DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
             if(file.exists())
-            document = domBuilder.parse(file);
-
+                document = domBuilder.parse(file);
             else{
                 document = domBuilder.newDocument();
-
                 Element Class = document.createElement("classList");
                 document.appendChild(Class);
             }
-
-            Log.d("File Size:",""+file.length());
-
-
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        Log.d("Document: ",""+(document == null));
         return document;
-
     }
-
-
 }
 
 
