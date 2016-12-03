@@ -1,0 +1,16 @@
+Theodore Kachulis - 100970278
+
+This week (until the 17th) we were focused on getting ready for the demo - ensuring that we could navigate
+atleast one floor in entirety with our map, and ensuring that we could add and remove classes from our users
+schedule.
+
+We only got notifications *kind of* working for this demo. They will be functional and included for the final 
+deliverable.
+
+Here are our goals for the coming week:
+
+  -Get notification timing functional.
+  -Ensure classes are stored in such a way that they are saved between uses, but deleted when the application
+   is deleted.
+  -Add more floors of XML data for our mapping system.
+  -Add a bar to input start position for mapping as well (by Dec 2nd)
