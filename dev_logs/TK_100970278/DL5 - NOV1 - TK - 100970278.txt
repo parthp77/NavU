@@ -1,0 +1,13 @@
+Theodore Kachulis - 100970278
+
+This week we met on Monday as usual.
+
+We now have basic mapping algorithm done thanks to Alex. Parth has started 
+creating vector/png files for our map display.
+
+Mike and I are working on the class notification and scheduling system. At
+discussed intervals, the four of us will meet to merge our progresses together
+to our master application.
+
+At this point, we have a good amount of functionality and are confident that
+we can achieve what we want to in regards to functionality with this app.
