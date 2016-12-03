@@ -1,0 +1,11 @@
+Theodore Kachulis - 100970278
+
+In the coming week, we have our oral exam and D3 to hand in. For this reason, I've been spending
+a lot of time working on diagrams and written documents.
+
+I will upload the diagrams.
+
+For the 80% functionality by the oral interview, all we need to do is finish the start location
+implementation for mapping (Alex) and add a few more floors of Herzberg into our XML data (Me).
+
+Oral discussion preperation together later this week in HP3341, prior to discussion.
