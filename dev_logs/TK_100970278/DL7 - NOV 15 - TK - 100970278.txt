@@ -1,0 +1,5 @@
+Theodore Kachulis - 100970278
+
+This week, the parts of the app that we have finished, like the main screen UI and mapp interface, have been linked
+together. Using the searchbar on the MainActivity screen, we can now search and map for any room available in our XML 
+file. Basically, just sends a screen to the DrawPath functionality.
