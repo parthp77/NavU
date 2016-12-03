@@ -1,0 +1,12 @@
+Theodore Kachulis - 100970278
+
+This week we implemented our mapping system (not the algorithm, but the nodes). We have figured out
+a method of mapping nodes using coordinates on the users screen image of the map. We will store these
+nodes with each having a name, position on the screen, and a list of other nodes it is connected to.
+
+The connected nodes will form a mapped network for our algorithm to work with, finding efficient path
+routes for a user. We will be storing these nodes in an XML file, as it takes little to no storage while
+still being quickly searchable.
+
+We mostly worked on filling in XML files with data and figuring out the formatting of nodes/how the nodes 
+will be displaying on the screen as a line to follow.
