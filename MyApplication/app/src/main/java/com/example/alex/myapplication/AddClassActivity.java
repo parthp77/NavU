@@ -80,11 +80,9 @@ public class AddClassActivity extends AppCompatActivity {
         myCalendar.set(Calendar.HOUR_OF_DAY, parseInt(hourMin[0]));
         myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
         myCalendar.set(Calendar.SECOND, 0);
-
-        //myCalendar.set(Calendar.HOUR_OF_DAY, Calendar.PM + parseInt(hourMin[0]) + parseInt(hourMin[1]));
-        //if(parseInt(hourMin[0])<=7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
-        //else myCalendar.set(Calendar.AM_PM, Calendar.AM);
-        myCalendar.set(Calendar.AM_PM, Calendar.PM);
+        if(parseInt(hourMin[0])<=7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
+        else myCalendar.set(Calendar.AM_PM, Calendar.AM);
+        //myCalendar.set(Calendar.AM_PM, Calendar.PM);
 
         for(int d = 0; d < days.size(); d++){
             Log.d("days values:", days.get(d));
@@ -206,13 +204,11 @@ public class AddClassActivity extends AppCompatActivity {
         if (classTime.before(now)){
             classTime.add(Calendar.DATE, 1);
         }
-        classTime.setTime(date);
-        Log.d("ClassTime in Millis:", ""+classTime.getTimeInMillis());
-
+        //classTime.setTime(date);
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1253, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         //alarmManager.set(AlarmManager.RTC_WAKEUP, classTime.getTimeInMillis(), pendingIntent);
@@ -225,7 +221,8 @@ public class AddClassActivity extends AppCompatActivity {
      * @return
      */
     private Notification getNotification(String content, String classroom){
-        Intent myIntent = new Intent(this, MapActivity.class);
+        Intent myIntent = new Intent(this, MainActivity.class);
+        Log.d("roomString: ", classroom);
         myIntent.putExtra("roomString", classroom);
         Notification.Builder builder = new Notification.Builder(this);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);

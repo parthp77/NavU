@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,19 +28,24 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "Notification Type: ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //ActionBar actionBar = getActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-
         setContentView(R.layout.activity_main_menu);
-        final Calendar myCalendar = Calendar.getInstance();
-        myCalendar.set(Calendar.HOUR, 10);
-        myCalendar.set(Calendar.MINUTE, 5);
 
+        Intent myIntent = getIntent();
+        String Endroom ="";
+        Log.d("Intent has extra: ", ""+myIntent.hasExtra("roomString"));
+        if(myIntent.hasExtra("roomString")) {
+            Endroom = myIntent.getExtras().getString("roomString");
+
+            Log.d("Extra: ",Endroom);
+
+                EditText editText = (EditText) findViewById(R.id.text_edit_end_room);
+
+                editText.setText(Endroom);
+            }
 
         Building b = new Building(this, "HP");
         final Context context = getApplicationContext();
@@ -91,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(MainActivity.this,
                         ClassesActivity.class);
-                scheduleNotification(getNotification("Class begins shortly"),myCalendar );
                 startActivity(myIntent);
             }
         });
