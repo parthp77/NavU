@@ -26,14 +26,13 @@ public class MapActivity extends AppCompatActivity {
     private Drawable[] map;
     private int currentFloor;
     private String build;
-    private int stair;
-    private boolean startFloor;
+    private int stair, startFloor, endFloor;
+    //private boolean startFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startFloor = true;
         //getting room string from main activity's editText
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
@@ -43,13 +42,24 @@ public class MapActivity extends AppCompatActivity {
 
         map = new Drawable[building.getNumFloors()];
 
+        //get route
         if (startRoom == null)
             route = building.plotCourse(building.getNodeById("HP3341"), building.getNodeById(roomString));
         else
             route = building.plotCourse(building.getNodeById(startRoom), building.getNodeById(roomString));
 
-        if (route.size() > 0) currentFloor = route.get(route.size()-1).getFloor();
-        for (int i=0; i < route.size(); i++) if (route.get(i).getId().charAt(0) == 'S') stair = i;
+        if (route.size() > 0)
+        {
+            startFloor = route.get(route.size()-1).getFloor();
+            endFloor = route.get(0).getFloor();
+            currentFloor = startFloor;
+        }
+        for (int i=0; i < route.size(); i++)
+        {
+            if (route.get(i).getId().charAt(0) == 'S'
+                && route.get(0).getFloor() != route.get(route.size()-1).getFloor())
+                    stair = i;
+        }
 
         MyView v = new MyView(this);
         v.setOnTouchListener(new MyView.OnTouchListener() {
@@ -57,15 +67,13 @@ public class MapActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (currentFloor == 3)
+                    if (currentFloor == startFloor)
                     {
-                        currentFloor = 2;
-                        startFloor = !startFloor;
+                        currentFloor = endFloor;
                     }
                     else
                     {
-                        currentFloor = 3;
-                        startFloor = !startFloor;
+                        currentFloor = startFloor;
                     }
                     v.invalidate();
                 }
@@ -78,19 +86,23 @@ public class MapActivity extends AppCompatActivity {
     public class MyView extends View
     {
 
+        Paint paint, p;
+
         public MyView(Context context)
         {
             super(context);
             //map = context.getResources().getDrawable(R.drawable.hp3);
             map[1] = getDrawable(build.toLowerCase() + String.valueOf(2),context);
             map[2] = getDrawable(build.toLowerCase() + String.valueOf(3),context);
+
+            paint = new Paint();
+            p = new Paint();
         }
 
         @Override
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
-            Paint paint = new Paint();
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);
@@ -98,13 +110,11 @@ public class MapActivity extends AppCompatActivity {
             map[currentFloor-1].draw(canvas);
 
             if (route == null) return;
-            Paint p = new Paint();
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(10);
             p.setColor(Color.RED);
-            Log.d("Current Floor ", String.valueOf(currentFloor));
-            Log.d("Startfloor? ", String.valueOf(startFloor));
-            if (!startFloor) {
+
+            if (currentFloor == endFloor) {
                 for (int i = 0; i < stair; i++) {
                     canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);
                 }
