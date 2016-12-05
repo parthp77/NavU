@@ -16,6 +16,8 @@ import android.widget.EditText;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -30,6 +32,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
 
 /**
  * Created by mikes on 2016-11-14.
@@ -49,6 +53,7 @@ public class ViewClassActivity extends AppCompatActivity{
         ArrayList<ClassObj> c = new ArrayList<>();
         Intent intent = getIntent();
         position = intent.getIntExtra("pos", 0);
+
         Log.d("Selected Position", ""+position);
         try{
             c = parseXML(this);
@@ -61,43 +66,21 @@ public class ViewClassActivity extends AppCompatActivity{
         }
 
         displayClass(c.get(position));
-        currName = c.get(position).getClassName();
+        final String classname = c.get(position).getClassName();
         Button button = (Button) findViewById(R.id.RemoveClass);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(ViewClassActivity.this,
                         ClassesActivity.class);
-                //removeNode(getDocument(getApplicationContext()),position);
-
-                //myIntent.putExtra("cToHide", position);
-
-                //myIntent.putExtra("name", ((EditText)findViewById(R.id.classNameOutput)).getText().toString());
+                Document doc = getDocument(getApplicationContext());
+                removeNode(getDocument(getApplicationContext()),position, classname);
                 startActivity(myIntent);
             }
         });
 
     }
 
-    private int removeClass(ClassObj c){
-        ArrayList<ClassObj> classList= new ArrayList<>();
-        try{
-            parseXML(this);
-        }
-        catch(XmlPullParserException e){
-            e.printStackTrace();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < classList.size(); i++){
-            if(c.equals(classList.get(i)));
-            return i;
-        }
-
-        return 0;
-    }
     private void displayClass(ClassObj c){
         EditText className = (EditText)findViewById(R.id.classNameOutput);
         EditText classRoom = (EditText)findViewById(R.id.classRoomOutput);
@@ -123,10 +106,11 @@ public class ViewClassActivity extends AppCompatActivity{
 
     }
 
-    private void removeNode(Document xmlDoc, int position){
-        xmlDoc.removeChild(xmlDoc.getElementById("class"));
+    private void removeNode(Document xmlDoc, int position, String className){
+        Node node = xmlDoc.getElementById(className);
+        node.getParentNode().removeChild(node);
 
-        //Save to xml
+        //Remove element from  xml
         try {
             DOMSource source = new DOMSource(xmlDoc);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

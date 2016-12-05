@@ -71,7 +71,7 @@ public class ClassesActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         Button button = (Button) findViewById(R.id.AddClass);
-        final int size = classList.size();
+        final int size = classList.size();    //Position in list rather than size
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(ClassesActivity.this,

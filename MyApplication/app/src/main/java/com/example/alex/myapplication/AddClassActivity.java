@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlPullParser;
@@ -53,6 +54,7 @@ public class AddClassActivity extends AppCompatActivity {
         //actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         final int size = intent.getIntExtra("size", 0);
+        Log.d("AddClass Size: ", ""+size);
         Button b = (Button) findViewById(R.id.AddClassToList);
         b.setOnClickListener(new OnClickListener(){
             public void onClick(View view)
@@ -125,7 +127,10 @@ public class AddClassActivity extends AppCompatActivity {
         //Appends the information to a new Element
         Element Class = xmlDoc.getDocumentElement();
 
+
         Element newClass = xmlDoc.createElement("class");
+        newClass.setAttribute("id", c.getClassName());
+        newClass.setIdAttribute("id",true);
         Element newName = xmlDoc.createElement("name");
         Element newDay1 = xmlDoc.createElement("day1");
         Element newDay2 = xmlDoc.createElement("day2");
@@ -207,14 +212,13 @@ public class AddClassActivity extends AppCompatActivity {
         if (classTime.before(now)){
             classTime.add(Calendar.DATE, 1);
         }
-        //classTime.setTime(date);
+
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1253, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        //alarmManager.set(AlarmManager.RTC_WAKEUP, classTime.getTimeInMillis(), pendingIntent);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, classTime.getTimeInMillis(),weekAhead.getTimeInMillis() ,pendingIntent);
     }
 
