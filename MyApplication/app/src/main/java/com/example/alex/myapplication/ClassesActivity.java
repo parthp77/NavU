@@ -111,6 +111,27 @@ public class ClassesActivity extends AppCompatActivity {
         return classList;
     }
 
+    private ArrayList<ClassObj> readClassList(XmlPullParser parser)throws XmlPullParserException, IOException{
+        ArrayList<ClassObj> entries = new ArrayList<ClassObj>();
+        ClassObj c;
+        parser.require(XmlPullParser.START_TAG, ns, "classList");
+        while(parser.next() != XmlPullParser.END_TAG){
+            if(parser.getEventType() != XmlPullParser.START_TAG){
+                continue;
+            }
+            String name= parser.getName();
+            if(name.equals("class")){
+
+                entries.add(readClass(parser));
+
+            }
+            else{
+                skip(parser);
+            }
+        }
+        return entries;
+    }
+
     private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
 
         parser.require(XmlPullParser.START_TAG, ns, "class");
@@ -121,24 +142,21 @@ public class ClassesActivity extends AppCompatActivity {
                 continue;
             }
             String name = parser.getName();
-            if(name.equals("name")){
+            if (name.equals("name")) {
                 className = readText(parser);
-            }
-            else if(name.equals("day1")){
+            } else if (name.equals("day1")) {
                 days.add(readText(parser));
-            }
-            else if (name.equals("day2")){
+            } else if (name.equals("day2")) {
                 days.add(readText(parser));
-            }
-            else if (name.equals("startTime")){
+            } else if (name.equals("startTime")) {
                 classTime = readText(parser);
-            }
-            else if (name.equals("roomString")){
+            } else if (name.equals("roomString")) {
                 room = readText(parser);
             }
-            else{
+             else {
                 skip(parser);
             }
+
         }
         return (new ClassObj(className,classTime,days,room));
     }
@@ -169,24 +187,7 @@ public class ClassesActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<ClassObj> readClassList(XmlPullParser parser)throws XmlPullParserException, IOException{
-        ArrayList<ClassObj> entries = new ArrayList<ClassObj>();
-        ClassObj c;
-        parser.require(XmlPullParser.START_TAG, ns, "classList");
-        while(parser.next() != XmlPullParser.END_TAG){
-            if(parser.getEventType() != XmlPullParser.START_TAG){
-                continue;
-            }
-            String name= parser.getName();
-            if(name.equals("class")){
-                entries.add(readClass(parser));
-            }
-            else{
-                skip(parser);
-            }
-        }
-        return entries;
-    }
+
 
 
     //Notification functions

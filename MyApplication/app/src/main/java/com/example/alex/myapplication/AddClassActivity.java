@@ -124,12 +124,14 @@ public class AddClassActivity extends AppCompatActivity {
     private void saveInfoToDoc(Document xmlDoc, ClassObj c, int position){
         //Appends the information to a new Element
         Element Class = xmlDoc.getDocumentElement();
+
         Element newClass = xmlDoc.createElement("class");
         Element newName = xmlDoc.createElement("name");
         Element newDay1 = xmlDoc.createElement("day1");
         Element newDay2 = xmlDoc.createElement("day2");
         Element StartTime = xmlDoc.createElement("startTime");
         Element roomString = xmlDoc.createElement("roomString");
+
 
 
         ArrayList<String> days = new ArrayList<>();
@@ -145,6 +147,7 @@ public class AddClassActivity extends AppCompatActivity {
         newClass.appendChild(newDay2);
         newClass.appendChild(StartTime);
         newClass.appendChild(roomString);
+
 
         Class.appendChild(newClass);
 

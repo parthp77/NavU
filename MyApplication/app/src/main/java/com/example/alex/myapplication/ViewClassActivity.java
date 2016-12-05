@@ -14,12 +14,22 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 /**
  * Created by mikes on 2016-11-14.
@@ -27,6 +37,9 @@ import java.util.ArrayList;
 
 public class ViewClassActivity extends AppCompatActivity{
     private static final String ns = null;
+    static final String xmlFile = "classes.xml";
+    private static String currName;
+    private static int position;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,7 +48,7 @@ public class ViewClassActivity extends AppCompatActivity{
         //actionBar.setDisplayHomeAsUpEnabled(true);
         ArrayList<ClassObj> c = new ArrayList<>();
         Intent intent = getIntent();
-        final int position = intent.getIntExtra("pos", 0);
+        position = intent.getIntExtra("pos", 0);
         Log.d("Selected Position", ""+position);
         try{
             c = parseXML(this);
@@ -48,13 +61,15 @@ public class ViewClassActivity extends AppCompatActivity{
         }
 
         displayClass(c.get(position));
-
+        currName = c.get(position).getClassName();
         Button button = (Button) findViewById(R.id.RemoveClass);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(ViewClassActivity.this,
                         ClassesActivity.class);
+                //removeNode(getDocument(getApplicationContext()),position);
+
                 //myIntent.putExtra("cToHide", position);
 
                 //myIntent.putExtra("name", ((EditText)findViewById(R.id.classNameOutput)).getText().toString());
@@ -108,6 +123,42 @@ public class ViewClassActivity extends AppCompatActivity{
 
     }
 
+    private void removeNode(Document xmlDoc, int position){
+        xmlDoc.removeChild(xmlDoc.getElementById("class"));
+
+        //Save to xml
+        try {
+            DOMSource source = new DOMSource(xmlDoc);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            StreamResult result = new StreamResult(openFileOutput(xmlFile, Context.MODE_PRIVATE));
+            transformer.transform(source, result);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private Document getDocument(Context context){
+        Document document = null;
+        try{
+            File file = new File(getApplicationContext().getFilesDir(), "classes.xml");
+            DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
+            if(file.exists())
+                document = domBuilder.parse(file);
+            else{
+                document = domBuilder.newDocument();
+                Element Class = document.createElement("classList");
+                document.appendChild(Class);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return document;
+    }
+
     /**
      * This will read the xml and display the previously inputted class details
      * @param context
@@ -152,7 +203,6 @@ public class ViewClassActivity extends AppCompatActivity{
     }
 
     private ClassObj readClass(XmlPullParser parser) throws  XmlPullParserException, IOException{
-
         parser.require(XmlPullParser.START_TAG, ns, "class");
         String className="", classTime = "", room="";
         ArrayList<String> days = new ArrayList<>();
@@ -161,6 +211,9 @@ public class ViewClassActivity extends AppCompatActivity{
                 continue;
             }
             String name = parser.getName();
+            if(name.equals("visible")){
+
+            }
             if(name.equals("name")){
                 className = readText(parser);
             }
