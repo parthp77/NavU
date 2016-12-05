@@ -1,0 +1,8 @@
+Michael Stupich Dev Log -- November 25, 2016
+
+Collaborated on Deliverable 3
+
+Coding: 
+	Worked on reading and writing to xml for mySchedule page
+	Still having issues with locating the file when using openFileInput().
+	Once that is solved however, nearly everything will be done, as the coding around that is almost all done and just needs to be slightly remapped.

@@ -1,0 +1,12 @@
+Michael Stupich Dev Log -- October 7, 2016
+
+Discussed with group some ideas about the project:
+	-> What the program should be able to do:
+		-> Scheduling component
+		-> Mapping component
+	-> What the options of the main page will be:
+		-> Map
+		-> Schedule
+		-> Options
+	-> Completed the deliverable as a group
+	

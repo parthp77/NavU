@@ -1,0 +1,10 @@
+Michael Stupich Dev Log -- December 3, 2016
+
+Discussed final UI with the group. Discussed with Alex how we would like to implement the notification start position.
+We decided on main activity with user able to choose their own start room. 
+
+Coding:
+	Fixed the notification system to alert user at the correct time
+	Remove class button on ViewClassActivity now properly removes the class
+	Made some slight changes to the UI
+	

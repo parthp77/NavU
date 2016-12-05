@@ -1,0 +1,12 @@
+Michael Stupich Dev Log -- November 18, 2016
+
+Discussed how information will be passed between the notifications and the program
+	-> Pass end room to the program
+		->How will start room be decided? (Currently undecided on this)
+
+Coding:
+	Set up notification to bring user to Map Activity with end Room.
+	Worked on reading and writing to xml again.
+		-> Have to figure out where the xml is stored in internal storage.
+		-> Where to put the xml in Android Studio so that the phone is able to edit the file
+	

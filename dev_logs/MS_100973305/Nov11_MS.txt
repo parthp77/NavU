@@ -1,1 +1,9 @@
 Michael Stupich Dev Log -- November 11, 2016
+
+
+Coding:
+	Created the layout for the Add Class and View Class activity
+	Worked on reading and writing from an xml for saved classes
+	Wrote some of the surrouding code for after that is solved.
+	
+	
