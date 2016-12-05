@@ -1,0 +1,11 @@
+Finished the project, including upgrades to map activity, exception handling (ommitted until now
+in order to test our XML's integrity) and extensive testing
+
+Map Activity:
+  > Now takes start room and end room, paths between them
+  > Now allows for more then 2 floors to be "relevant" for use of tunnels
+  > Exception handling added to make sure user input is in the right format
+  
+Building:
+  > Exception handling added to account for rooms not existing, keeps app from crashing and 
+    returns users to the main activity
