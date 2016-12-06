@@ -1,0 +1,4 @@
+Brainstormed Ideas for app
+
+-Navigation app, for inside campus buildings
+  -completely offline; no networks required

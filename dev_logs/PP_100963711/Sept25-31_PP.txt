@@ -1,0 +1,4 @@
+We all worked together to prepare the deliverable PDF, outlining functional and
+ non-functional requirements.
+
+Some mockups created by Ted.

@@ -1,0 +1,4 @@
+Monday nov 13:
+  - Implemented string passing from Main Activity to Map Activity
+    to pass user input (room number) to Mapping method, thus allowing Alex's
+    pathfinding algorithm to run for the nodes we have so far.

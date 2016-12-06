@@ -1,0 +1,3 @@
+Had our regular meeting, further discussed the layout of the app.
+Started getting oriented with the Android Studio IDE.
+Planning to do major part of the build over the break.

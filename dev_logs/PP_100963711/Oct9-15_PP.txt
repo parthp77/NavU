@@ -1,0 +1,2 @@
+We all worked together for a few hours during the meeting, making the initial
+layout of the app. (Committed by Alex)
