@@ -62,7 +62,7 @@ public class AddClassActivity extends AppCompatActivity {
 
                 Document myDoc = getDocument(getApplicationContext());
                 c = readInfo();
-                CreateNotification(c);
+                CreateNotification(c, size);
                 saveInfoToDoc(myDoc, c, size);
                 Intent myIntent = new Intent(AddClassActivity.this, ClassesActivity.class);
                 startActivity(myIntent);
@@ -71,13 +71,13 @@ public class AddClassActivity extends AppCompatActivity {
         });
     }
 
-    private void CreateNotification(ClassObj myClass){
+    private void CreateNotification(ClassObj myClass, int size){
         String className = myClass.getClassName();
         String timeToParse = myClass.getClassTime();
         String[] hourMin = timeToParse.split(":");
         String classRoom = myClass.getRoom();
         ArrayList<String> days = myClass.getWeekDays();
-        final Calendar myCalendar = Calendar.getInstance();
+        Calendar myCalendar = Calendar.getInstance();
         myCalendar.setTime(new Date());
         myCalendar.set(Calendar.HOUR_OF_DAY, parseInt(hourMin[0]));
         myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
@@ -95,16 +95,21 @@ public class AddClassActivity extends AppCompatActivity {
             else if(days.get(d).equals("Friday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);}
 
             Log.d("Calendar time:", myCalendar.getTime().toString());
+            Log.d("Classroom:", classRoom);
             scheduleNotification(getNotification(className+" begins shortly. Click here to get your directions."
-                    ,classRoom),myCalendar);
+                    ,classRoom),myCalendar, size);
         }
     }
 
     private ClassObj readInfo() {
         String className = ((EditText) findViewById(R.id.classNameInput)).getText().toString();
+        if(className.equals("")){className="COMP3004";}
         ArrayList<String> days = new ArrayList<String>();
+
         String startTime = ((EditText) findViewById(R.id.editText2)).getText().toString();
+        if(startTime.equals(""))startTime = "1:05";
         String roomString  =((EditText)findViewById(R.id.classRoomInput)).getText().toString();
+        if(roomString.equals("") )roomString = "HP3115";
         CheckBox checkBox = (CheckBox) findViewById(R.id.classMonday);
         if (checkBox.isChecked())
             days.add("Monday");
@@ -120,6 +125,17 @@ public class AddClassActivity extends AppCompatActivity {
         checkBox = (CheckBox) findViewById(R.id.classFriday);
         if (checkBox.isChecked())
             days.add("Friday");
+
+        if(days.size() ==0){
+            days.clear();
+            days.add("Tuesday");
+            days.add("Thursday");
+        }
+        if(days.size() == 1){
+            days.get(0);
+            days.add(days.get(0));
+        }
+
         return new ClassObj(className, startTime, days, roomString);
     }
 
@@ -136,7 +152,6 @@ public class AddClassActivity extends AppCompatActivity {
         Element newDay2 = xmlDoc.createElement("day2");
         Element StartTime = xmlDoc.createElement("startTime");
         Element roomString = xmlDoc.createElement("roomString");
-
 
 
         ArrayList<String> days = new ArrayList<>();
@@ -202,24 +217,26 @@ public class AddClassActivity extends AppCompatActivity {
      * @param notification  The notification to be pushed
      * @param classTime     The time in which the notification will display to the user
      */
-    private void scheduleNotification(Notification notification, Calendar classTime){
+    private void scheduleNotification(Notification notification, Calendar classTime, int notiID){
         Date date = new Date();
         Calendar now = Calendar.getInstance();
         Calendar weekAhead = Calendar.getInstance();
         weekAhead.setTime(date);
         weekAhead.add(Calendar.DATE, 7);
         now.setTime(date);
-        if (classTime.before(now)){
-            classTime.add(Calendar.DATE, 1);
-        }
+        //if (classTime.before(now)){
+        //    classTime.add(Calendar.DATE, 1);
+        //}
+        //classTime.setTime(date);
+        Log.d("ClassTime", classTime.toString());
 
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 0 );
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1253, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, notiID, notificationIntent, 0);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, classTime.getTimeInMillis(),weekAhead.getTimeInMillis() ,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, classTime.getTimeInMillis(),weekAhead.getTimeInMillis() ,pendingIntent);
     }
 
     /** Builds the notification using the preferences specified by the user
@@ -231,6 +248,7 @@ public class AddClassActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, MainActivity.class);
         Log.d("roomString: ", classroom);
         myIntent.putExtra("roomString", classroom);
+        Log.d("roomStringAfterAdd", myIntent.getStringExtra("roomString"));
         Notification.Builder builder = new Notification.Builder(this);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         builder.setContentTitle("Scheduled Notification");
