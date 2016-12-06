@@ -21,11 +21,10 @@ import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
 
-    private Building building;
-    ArrayList<MapNode> route;
+    private Building[] building;
     private Drawable[] map;
     private int currentFloor;
-    private String build;
+    private String[] build;
     private int stair, startFloor, endFloor;
     //private boolean startFloor;
 
@@ -38,18 +37,27 @@ public class MapActivity extends AppCompatActivity {
         String roomString = intent.getExtras().getString("roomString");
         String startRoom = intent.getExtras().getString("startRoom");
 
-        try
-        {
-            build = roomString.substring(0, 2);
-        }
-        catch (StringIndexOutOfBoundsException e)
+        //check for input
+        if (roomString == null || startRoom == null)
         {
             returnToMain();
             return;
         }
-        building = new Building(this, build);
-
-        map = new Drawable[building.getNumFloors()];
+        //get building id's
+        if (!startRoom.substring(0,2).equals(roomString.substring(0,2)))
+        {
+            build = new String[2];
+            build[0] = startRoom.substring(0,2);
+            build[1] = roomString.substring(0,2);
+        }
+        else
+        {
+            build = new String[1];
+            build[0] = startRoom.substring(0, 2);
+        }
+        //load nodes
+        for (int i=0; i < build.length; i++)
+            building[i] = new Building(this, build[i]);
 
         //get route
         if (startRoom == null)
