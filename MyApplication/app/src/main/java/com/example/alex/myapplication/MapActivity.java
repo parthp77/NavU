@@ -37,7 +37,16 @@ public class MapActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
         String startRoom = intent.getExtras().getString("startRoom");
-        build = roomString.substring(0,2);
+
+        try
+        {
+            build = roomString.substring(0, 2);
+        }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            returnToMain();
+            return;
+        }
         building = new Building(this, build);
 
         map = new Drawable[building.getNumFloors()];
@@ -48,6 +57,16 @@ public class MapActivity extends AppCompatActivity {
         else
             route = building.plotCourse(building.getNodeById(startRoom), building.getNodeById(roomString));
 
+        if (route == null)
+        {
+            returnToMain();
+            return;
+        }
+        if (route.size() == 0)
+        {
+            returnToMain();
+            return;
+        }
         if (route.size() > 0)
         {
             startFloor = route.get(route.size()-1).getFloor();
@@ -81,6 +100,13 @@ public class MapActivity extends AppCompatActivity {
             }
         });
         setContentView(v);
+    }
+
+    private void returnToMain()
+    {
+        Intent myIntent = new Intent(MapActivity.this,
+                MainActivity.class);
+        startActivity(myIntent);
     }
 
     public class MyView extends View

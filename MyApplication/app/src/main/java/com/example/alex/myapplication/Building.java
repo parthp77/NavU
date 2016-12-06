@@ -40,30 +40,31 @@ public class Building {
         ArrayList<MapNode> toVisit = new ArrayList<MapNode>();
         toVisit.add(start);
 
-        while (!toVisit.isEmpty())
-        {
-            MapNode node = toVisit.remove(0);
-            //check if path has been found
-            if (node == end) return buildPath(end);
-            else
-            {
-                //Log.d("Visit: ", node.getId());
-                //add current node to the list of visited nodes
-                visitedNodes.add(node);
+        try {
+            while (!toVisit.isEmpty()) {
+                MapNode node = toVisit.remove(0);
+                //check if path has been found
+                if (node == end) return buildPath(end);
+                else {
+                    //Log.d("Visit: ", node.getId());
+                    //add current node to the list of visited nodes
+                    visitedNodes.add(node);
 
-                for (int i=0; i < node.connections.size(); i++)
-                {
-                    //add each unvisited node to the list of visited and add each to the list of branches to search
-                    MapNode neighbour = getNodeById(node.connections.get(i));
-                    if (!visitedNodes.contains(neighbour) && !toVisit.contains(neighbour))
-                    {
-                        neighbour.setParent(node);
-                        toVisit.add(neighbour);
+                    for (int i = 0; i < node.connections.size(); i++) {
+                        //add each unvisited node to the list of visited and add each to the list of branches to search
+                        MapNode neighbour = getNodeById(node.connections.get(i));
+                        if (!visitedNodes.contains(neighbour) && !toVisit.contains(neighbour)) {
+                            neighbour.setParent(node);
+                            toVisit.add(neighbour);
+                        }
                     }
                 }
             }
         }
-
+        catch (Exception e)
+        {
+            return null;
+        }
         return null;
     }
 

@@ -1,0 +1,15 @@
+Now that multiple floors worth of XMLs are complete, re-tested and made improvements to the
+map activity and map nodes
+
+Map Node
+  > Now has some extra getters, primarily getFloor(), which parses it's id for the floor it's 
+    located on
+    
+Map Activity
+  > Now reads number of floors, and allocates space for all the floor maps, then reads those png's
+    into memory
+  > Now switches between relevant maps using touch input
+  
+XML
+  > Buildings now indicate how many floors they have
+  > Fixed broken connections which were causing crashes

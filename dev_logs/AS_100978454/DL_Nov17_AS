@@ -1,0 +1,10 @@
+Started work on XML files, discovered problems with pathfinding and map rendering.
+
+Pathfinding:
+  > few minor bugs got fixed (confused lists, problems with node storage)
+  > changed design to store connections as Strings rather then nodes, allowing for quicker 
+    parsing and less storage
+   
+Map rendering:
+  > using png's instead of SVG's for simplicity's sake, they seem to fit the screen nicely
+  > aesthetic changes made to the route (primarily line width)

@@ -1,0 +1,7 @@
+Created several activites and linked them together:
+  -main menu
+    > buttons that switch to the other activities
+  -settings
+    > switches for different settings (Notifications on/off, notification settings)
+  -about
+    > authors
