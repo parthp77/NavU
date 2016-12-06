@@ -1,0 +1,10 @@
+Theodore Kachulis
+100970278
+
+This week has been very busy - the oral exam went well (we think/hope) and we have a good
+idea of what we needed to improve on.
+
+We added a few crucial things to the ui, such as an input for the start location. Saving and
+removing classes now works. Mapping of Herzberg is done, and tunnel access to Steacie Building
+is being added.
+
