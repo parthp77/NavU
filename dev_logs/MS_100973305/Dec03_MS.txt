@@ -5,6 +5,11 @@ We decided on main activity with user able to choose their own start room.
 
 Coding:
 	Fixed the notification system to alert user at the correct time
+		->Passing the room string to the main activity to allow user to easily get to room from notification.
 	Remove class button on ViewClassActivity now properly removes the class
+		-> Added the name as an ID attribute, so I could locate the correct class in the xml, and remove
+		   it, as using the position was giving issues.
 	Made some slight changes to the UI
+		->Changed some themes, Added the back arrow in the top left.
+	
 	

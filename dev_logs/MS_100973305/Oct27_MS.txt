@@ -4,6 +4,8 @@ Discussed with the group some ideas about the design and implementation of the p
 
 Coding:
 Created some XMLs to store class data.
+Changed styling of the preferences.
+Fixed the layout of a couple activities.
 
 
 		

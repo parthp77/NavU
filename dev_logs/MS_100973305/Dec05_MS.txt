@@ -1,0 +1,14 @@
+Michael Stupich Dev Log -- December 5, 2016
+
+Worked on final touches.
+Discussed the video with the group.
+Discussed the final presentation of our application
+
+Coding:
+	Fixed the remove class button.
+	Added some error checking
+	Allowed user to enter a single week day rather than needing 2
+	Worked on Notifications to get correct time working (Issues arose with the Calendar)
+	
+	
+	

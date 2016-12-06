@@ -1,9 +1,0 @@
-Michael Stupich Dev Log -- December 5-9, 2016
-
-Worked on final touches.
-Discussed the video with the group.
-Discussed the final presentation of our application
-
-Coding:
-	Fixed the remove class button.
-	
