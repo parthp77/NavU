@@ -6,6 +6,8 @@ import android.util.Log;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.Collections;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -21,6 +23,7 @@ public class Building {
 
     //list of nodes in the building
     private ArrayList<MapNode> mapNodes = new ArrayList<MapNode>();
+    private ArrayList<MapNode> route = new ArrayList<MapNode>();
 
     private int numFloors;
 
@@ -34,7 +37,7 @@ public class Building {
 
     //finds optimal path
     //takes user's position and destination node (room)
-    public ArrayList<MapNode> plotCourse(MapNode start, MapNode end)
+    public void plotCourse(MapNode start, MapNode end)
     {
         ArrayList<MapNode> visitedNodes = new ArrayList<MapNode>();
         ArrayList<MapNode> toVisit = new ArrayList<MapNode>();
@@ -44,7 +47,9 @@ public class Building {
             while (!toVisit.isEmpty()) {
                 MapNode node = toVisit.remove(0);
                 //check if path has been found
-                if (node == end) return buildPath(end);
+                if (node == end) {
+                    route = buildPath(end);
+                }
                 else {
                     //Log.d("Visit: ", node.getId());
                     //add current node to the list of visited nodes
@@ -63,9 +68,13 @@ public class Building {
         }
         catch (Exception e)
         {
-            return null;
+            return;
         }
-        return null;
+    }
+
+    public ArrayList<MapNode> getRoute(int i)
+    {
+        return route;
     }
 
     public MapNode getNodeById(String id)
@@ -90,6 +99,7 @@ public class Building {
         {
             path.get(i).setParent(null);
         }
+        Collections.reverse(path);
         return path;
     }
 

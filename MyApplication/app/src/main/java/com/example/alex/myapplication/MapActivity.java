@@ -22,10 +22,8 @@ import java.util.ArrayList;
 public class MapActivity extends AppCompatActivity {
 
     private Building[] building;
-    private Drawable[] map;
-    private int currentFloor;
+    private int currMap;
     private String[] build;
-    private int stair, startFloor, endFloor;
     //private boolean startFloor;
 
     @Override
@@ -47,45 +45,21 @@ public class MapActivity extends AppCompatActivity {
         if (!startRoom.substring(0,2).equals(roomString.substring(0,2)))
         {
             build = new String[2];
+            building = new Building[2];
             build[0] = startRoom.substring(0,2);
             build[1] = roomString.substring(0,2);
         }
         else
         {
             build = new String[1];
+            building = new Building[1];
             build[0] = startRoom.substring(0, 2);
         }
-        //load nodes
+        //load nodes and plot courses
         for (int i=0; i < build.length; i++)
+        {
             building[i] = new Building(this, build[i]);
-
-        //get route
-        if (startRoom == null)
-            route = building.plotCourse(building.getNodeById("HP3341"), building.getNodeById(roomString));
-        else
-            route = building.plotCourse(building.getNodeById(startRoom), building.getNodeById(roomString));
-
-        if (route == null)
-        {
-            returnToMain();
-            return;
-        }
-        if (route.size() == 0)
-        {
-            returnToMain();
-            return;
-        }
-        if (route.size() > 0)
-        {
-            startFloor = route.get(route.size()-1).getFloor();
-            endFloor = route.get(0).getFloor();
-            currentFloor = startFloor;
-        }
-        for (int i=0; i < route.size(); i++)
-        {
-            if (route.get(i).getId().charAt(0) == 'S'
-                && route.get(0).getFloor() != route.get(route.size()-1).getFloor())
-                    stair = i;
+            building[i].plotCourse(building[i].getNodeById(startRoom), building[i].getNodeById(roomString));
         }
 
         MyView v = new MyView(this);
@@ -94,14 +68,7 @@ public class MapActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (currentFloor == startFloor)
-                    {
-                        currentFloor = endFloor;
-                    }
-                    else
-                    {
-                        currentFloor = startFloor;
-                    }
+                    currMap++;
                     v.invalidate();
                 }
                 return true;
