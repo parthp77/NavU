@@ -73,7 +73,7 @@ public class ViewClassActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent myIntent = new Intent(ViewClassActivity.this,
                         ClassesActivity.class);
-                Document doc = getDocument(getApplicationContext());
+                //Document doc = getDocument(getApplicationContext());
                 removeNode(getDocument(getApplicationContext()),position, classname);
                 startActivity(myIntent);
             }

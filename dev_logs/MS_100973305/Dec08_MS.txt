@@ -1,0 +1,11 @@
+Michael Stupich Dev Log -- December 8, 2016
+
+Made one small change to UI
+
+Coding:
+
+	Fixed a bug with the notifications
+		-> Problem with the ID of the notification was causing the user to only ever be able to have one ongoing notification
+			-> Changed the id to be day(0 or 1) + size*2(size of list of classes, * 2 so that we never have same ID)
+
+		

@@ -3,6 +3,7 @@ package com.example.alex.myapplication;
 import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
@@ -77,16 +79,21 @@ public class AddClassActivity extends AppCompatActivity {
         String[] hourMin = timeToParse.split(":");
         String classRoom = myClass.getRoom();
         ArrayList<String> days = myClass.getWeekDays();
-        Calendar myCalendar = Calendar.getInstance();
-        myCalendar.setTime(new Date());
-        myCalendar.set(Calendar.HOUR_OF_DAY, parseInt(hourMin[0]));
-        myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
-        myCalendar.set(Calendar.SECOND, 0);
-        if(parseInt(hourMin[0])<=7)myCalendar.set(Calendar.AM_PM, Calendar.PM);
-        else myCalendar.set(Calendar.AM_PM, Calendar.AM);
-        //myCalendar.set(Calendar.AM_PM, Calendar.PM);
+        //myCalendar.setTime(new Date());
 
+
+        //for(int d = 0; d < 1; d++){
         for(int d = 0; d < days.size(); d++){
+
+            Calendar myCalendar = Calendar.getInstance();
+            myCalendar.setTimeInMillis(System.currentTimeMillis());
+            if(parseInt(hourMin[0]) <= 7){
+                myCalendar.set(Calendar.HOUR_OF_DAY, parseInt(hourMin[0])+12);
+            }
+            else
+                myCalendar.set(Calendar.HOUR_OF_DAY, parseInt(hourMin[0]));
+            myCalendar.set(Calendar.MINUTE, parseInt(hourMin[1]));
+            myCalendar.set(Calendar.SECOND, 0);
             Log.d("days values:", days.get(d));
             if(days.get(d).equals("Monday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);}
             else if(days.get(d).equals("Tuesday")){myCalendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);}
@@ -97,18 +104,18 @@ public class AddClassActivity extends AppCompatActivity {
             Log.d("Calendar time:", myCalendar.getTime().toString());
             Log.d("Classroom:", classRoom);
             scheduleNotification(getNotification(className+" begins shortly. Click here to get your directions."
-                    ,classRoom),myCalendar, size);
+                    ,classRoom,d * size),myCalendar, d + (size * 2));
         }
     }
 
     private ClassObj readInfo() {
-        String className = ((EditText) findViewById(R.id.classNameInput)).getText().toString();
+        String className = ((EditText) findViewById(R.id.classNameInput)).getText().toString().toUpperCase();
         if(className.equals("")){className="COMP3004";}
         ArrayList<String> days = new ArrayList<String>();
 
         String startTime = ((EditText) findViewById(R.id.editText2)).getText().toString();
         if(startTime.equals(""))startTime = "1:05";
-        String roomString  =((EditText)findViewById(R.id.classRoomInput)).getText().toString();
+        String roomString  =((EditText)findViewById(R.id.classRoomInput)).getText().toString().toUpperCase();
         if(roomString.equals("") )roomString = "HP3115";
         CheckBox checkBox = (CheckBox) findViewById(R.id.classMonday);
         if (checkBox.isChecked())
@@ -217,26 +224,34 @@ public class AddClassActivity extends AppCompatActivity {
      * @param notification  The notification to be pushed
      * @param classTime     The time in which the notification will display to the user
      */
-    private void scheduleNotification(Notification notification, Calendar classTime, int notiID){
-        Date date = new Date();
-        Calendar now = Calendar.getInstance();
-        Calendar weekAhead = Calendar.getInstance();
-        weekAhead.setTime(date);
-        weekAhead.add(Calendar.DATE, 7);
-        now.setTime(date);
-        //if (classTime.before(now)){
-        //    classTime.add(Calendar.DATE, 1);
-        //}
-        //classTime.setTime(date);
-        Log.d("ClassTime", classTime.toString());
+    private void scheduleNotification(Notification notification, Calendar classTime, int id){
+        //int NotificationID = (int) System.currentTimeMillis();
+        //int NotificationID = id;
+        //classTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+        //classTime.set(Calendar.MONTH, 12);
+        //classTime.set(Calendar.YEAR, 2016);
+        //classTime.set(Calendar.DAY_OF_MONTH, 8);
+        //classTime.set(Calendar.HOUR_OF_DAY, 4);
+        //classTime.set(Calendar.MINUTE, 35);
+        //classTime.set(Calendar.SECOND, 0);
+        //classTime.set(Calendar.AM_PM, Calendar.AM);
+
+        AlarmManager alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //notificationManager.notify(NotificationID, notification);
 
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 0 );
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, id );
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, notiID, notificationIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, 0);
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, classTime.getTimeInMillis(),weekAhead.getTimeInMillis() ,pendingIntent);
+
+        Log.d("ClassTime", classTime.toString());
+
+
+
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, classTime.getTimeInMillis(), (1000*60*60*24*7),pendingIntent);
     }
 
     /** Builds the notification using the preferences specified by the user
@@ -244,23 +259,25 @@ public class AddClassActivity extends AppCompatActivity {
      * @param content   The text of the notification
      * @return
      */
-    private Notification getNotification(String content, String classroom){
+    private Notification getNotification(String content, String classroom, int id){
         Intent myIntent = new Intent(this, MainActivity.class);
         Log.d("roomString: ", classroom);
         myIntent.putExtra("roomString", classroom);
         Log.d("roomStringAfterAdd", myIntent.getStringExtra("roomString"));
-        Notification.Builder builder = new Notification.Builder(this);
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, id , myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle("Scheduled Notification");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_stat_new_message)
                 .setPriority(Notification.PRIORITY_DEFAULT)
-                .setStyle(new Notification.BigTextStyle()
+                .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("Directions")
                         .setBigContentTitle("NavU")
                         .setSummaryText("Get Directions to Class"))
                 .setAutoCancel(true)
-                .setContentIntent(PendingIntent.getActivity(this, 0, myIntent, 0));
+                .setContentIntent(pendingIntent);
 
         //Setting the type of notification - User may only want vibrate notification and not sound
         String TAG = "Notification Setting";

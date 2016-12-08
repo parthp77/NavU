@@ -10,13 +10,14 @@ import android.content.Intent;
  * Created by mike on 2016-11-05.
  */
 
-public class NotificationPublisher extends BroadcastReceiver{
+public class NotificationPublisher extends BroadcastReceiver
+{
 
     public static String NOTIFICATION_ID= "notification-id";
     public static String NOTIFICATION = "notification";
 
+    @Override
     public void onReceive(Context context, Intent intent){
-
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
