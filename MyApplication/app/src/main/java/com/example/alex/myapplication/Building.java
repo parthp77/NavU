@@ -6,6 +6,8 @@ import android.util.Log;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.Collections;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -21,10 +23,7 @@ public class Building {
 
     //list of nodes in the building
     private ArrayList<MapNode> mapNodes = new ArrayList<MapNode>();
-
-    private int numFloors;
-
-    public int getNumFloors() { return numFloors; }
+    private ArrayList<MapNode> route = new ArrayList<MapNode>();
 
     //constructor, a room ID (for determing what building to load)
     public Building(Context context, String init)
@@ -44,12 +43,14 @@ public class Building {
             while (!toVisit.isEmpty()) {
                 MapNode node = toVisit.remove(0);
                 //check if path has been found
-                if (node == end) return buildPath(end);
+                if (node == end) {
+                    return buildPath(end);
+                }
                 else {
                     //Log.d("Visit: ", node.getId());
                     //add current node to the list of visited nodes
                     visitedNodes.add(node);
-
+                    //Log.d("visiting", node.getId());
                     for (int i = 0; i < node.connections.size(); i++) {
                         //add each unvisited node to the list of visited and add each to the list of branches to search
                         MapNode neighbour = getNodeById(node.connections.get(i));
@@ -66,6 +67,11 @@ public class Building {
             return null;
         }
         return null;
+    }
+
+    public ArrayList<MapNode> getRoute(int i)
+    {
+        return route;
     }
 
     public MapNode getNodeById(String id)
@@ -90,6 +96,7 @@ public class Building {
         {
             path.get(i).setParent(null);
         }
+        Collections.reverse(path);
         return path;
     }
 
@@ -137,8 +144,6 @@ public class Building {
             doc.getDocumentElement().normalize();
             //find the element corresponding to the building we're interested in
             Element ele = doc.getElementById(building);
-            NodeList fc = ele.getElementsByTagName("floorcount");
-            numFloors = Integer.parseInt(fc.item(0).getTextContent());
             //find all elements in that building
             NodeList nList = ele.getElementsByTagName("node");
             for (int i=0; i < nList.getLength(); i++)
@@ -152,10 +157,10 @@ public class Building {
                 }
                 //create new mapNode
                 mapNodes.add(new MapNode(
-                    Float.parseFloat(eElement.getElementsByTagName("positionx").item(0).getTextContent()),
-                    Float.parseFloat(eElement.getElementsByTagName("positiony").item(0).getTextContent()),
-                    eElement.getElementsByTagName("id").item(0).getTextContent(),
-                    connections
+                        Float.parseFloat(eElement.getElementsByTagName("positionx").item(0).getTextContent()),
+                        Float.parseFloat(eElement.getElementsByTagName("positiony").item(0).getTextContent()),
+                        eElement.getElementsByTagName("id").item(0).getTextContent(),
+                        connections
                 ));
             }
         } catch (Exception e) {

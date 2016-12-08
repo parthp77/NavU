@@ -21,86 +21,115 @@ import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
 
-    private Building building;
-    ArrayList<MapNode> route;
-    private Drawable[] map;
+    private ArrayList<Building> buildings = new ArrayList<Building>();
+    private ArrayList<ArrayList<MapNode>> routes = new ArrayList<ArrayList<MapNode>>();
+    private ArrayList<Drawable> maps = new ArrayList<Drawable>();
     private int currentFloor;
-    private String build;
-    private int stair, startFloor, endFloor;
     //private boolean startFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        currentFloor = 0;
+
         //getting room string from main activity's editText
         Intent intent = getIntent();
         String roomString = intent.getExtras().getString("roomString");
         String startRoom = intent.getExtras().getString("startRoom");
 
-        try
-        {
-            build = roomString.substring(0, 2);
-        }
-        catch (StringIndexOutOfBoundsException e)
+        //some error checking
+        if (roomString == null || startRoom == null)
         {
             returnToMain();
             return;
         }
-        building = new Building(this, build);
 
-        map = new Drawable[building.getNumFloors()];
-
-        //get route
-        if (startRoom == null)
-            route = building.plotCourse(building.getNodeById("HP3341"), building.getNodeById(roomString));
-        else
-            route = building.plotCourse(building.getNodeById(startRoom), building.getNodeById(roomString));
-
-        if (route == null)
+        if (roomString.length() < 5 || startRoom.length() < 5)
         {
             returnToMain();
             return;
         }
-        if (route.size() == 0)
-        {
-            returnToMain();
-            return;
-        }
-        if (route.size() > 0)
-        {
-            startFloor = route.get(route.size()-1).getFloor();
-            endFloor = route.get(0).getFloor();
-            currentFloor = startFloor;
-        }
-        for (int i=0; i < route.size(); i++)
-        {
-            if (route.get(i).getId().charAt(0) == 'S'
-                && route.get(0).getFloor() != route.get(route.size()-1).getFloor())
-                    stair = i;
-        }
 
-        MyView v = new MyView(this);
-        v.setOnTouchListener(new MyView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+        String build = roomString.substring(0,2);
+
+        //same floor
+        if (roomString.substring(0,3).equals(startRoom.substring(0,3)))
+        {
+            buildings.add(new Building(this, build));
+            routes.add(buildings.get(0).plotCourse(buildings.get(0).getNodeById(startRoom), buildings.get(0).getNodeById(roomString)));
+            maps.add(getDrawable(startRoom.substring(0,3).toLowerCase(), this));
+        }
+        //same building, different floors
+        else if (roomString.substring(0,2).equals(startRoom.substring(0,2)))
+        {
+            buildings.add(new Building(this, build));
+            ArrayList<MapNode> temp = buildings.get(0).plotCourse(buildings.get(0).getNodeById(startRoom), buildings.get(0).getNodeById(roomString));
+
+            if (temp == null)
             {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (currentFloor == startFloor)
-                    {
-                        currentFloor = endFloor;
-                    }
-                    else
-                    {
-                        currentFloor = startFloor;
-                    }
-                    v.invalidate();
-                }
-                return true;
+                returnToMain();
+                return;
             }
-        });
-        setContentView(v);
-    }
+
+            routes = seperateRoute(temp);
+            maps.add(getDrawable(startRoom.substring(0,3).toLowerCase(), this));
+            maps.add(getDrawable(roomString.substring(0,3).toLowerCase(), this));
+        }
+        //different buildings
+        else {
+            buildings.add(new Building(this, startRoom.substring(0, 2)));
+            buildings.add(new Building(this, "TN"));
+            buildings.add(new Building(this, roomString.substring(0, 2)));
+
+            ArrayList<MapNode> temp = buildings.get(0).plotCourse(buildings.get(0).getNodeById(startRoom),
+                    buildings.get(0).getNodeById(startRoom.substring(0, 2) + "tunnels"));
+
+            //if starting on first floor of first building
+            if (!startRoom.substring(2, 3).equals("1")) {
+                routes = seperateRoute(temp);
+                maps.add(getDrawable(startRoom.substring(0, 3).toLowerCase(), this));
+            } else {
+                routes.add(temp);
+            }
+            maps.add(getDrawable(startRoom.substring(0, 2).toLowerCase() + "1", this));
+
+            //add tunnels
+            routes.add(buildings.get(1).plotCourse(buildings.get(1).getNodeById("TN" + startRoom.substring(0, 2)),
+                    buildings.get(1).getNodeById("TN" + roomString.substring(0, 2))));
+            maps.add(getDrawable("tunnels", this));
+
+            //add second building
+            routes.add(buildings.get(2).plotCourse(buildings.get(2).getNodeById(roomString.substring(0, 2) + "tunnels"),
+                    buildings.get(2).getNodeById(roomString)));
+            maps.add(getDrawable(roomString.substring(0, 3).toLowerCase(), this));
+        }
+
+            //check for tomfoolery
+            for (int i=0; i < routes.size(); i++)
+            {
+                if (routes.get(0) == null)
+                {
+                    returnToMain();
+                    return;
+                }
+            }
+
+            //check for user input, switch floors if screen is touched
+            MyView v = new MyView(this);
+            v.setOnTouchListener(new MyView.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event)
+                {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        currentFloor = (++currentFloor) % maps.size();
+                        v.invalidate();
+                    }
+                    return true;
+                }
+            });
+            setContentView(v);
+        }
 
     private void returnToMain()
     {
@@ -118,8 +147,6 @@ public class MapActivity extends AppCompatActivity {
         {
             super(context);
             //map = context.getResources().getDrawable(R.drawable.hp3);
-            map[1] = getDrawable(build.toLowerCase() + String.valueOf(2),context);
-            map[2] = getDrawable(build.toLowerCase() + String.valueOf(3),context);
 
             paint = new Paint();
             p = new Paint();
@@ -132,31 +159,29 @@ public class MapActivity extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);
-            map[currentFloor-1].setBounds(0,0,getWidth(),getHeight());
-            map[currentFloor-1].draw(canvas);
+            maps.get(currentFloor).setBounds(0,0,getWidth(),getHeight());
+            maps.get(currentFloor).draw(canvas);
 
-            if (route == null) return;
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(10);
+            p.setStrokeWidth(8);
             p.setColor(Color.RED);
 
-            if (currentFloor == endFloor) {
-                for (int i = 0; i < stair; i++) {
-                    canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);
-                }
-            }
-            else
-            {
-                for (int i = stair; i < route.size() - 1; i++) {
-                    canvas.drawLine(route.get(i).getX() * getWidth(), route.get(i).getY() * getHeight(), route.get(i + 1).getX() * getWidth(), route.get(i + 1).getY() * getHeight(), p);
-                }
-            }
+            for (int i=0; i < routes.get(currentFloor).size()-1; i++)
+                canvas.drawLine(routes.get(currentFloor).get(i).getX() * getWidth(),
+                        routes.get(currentFloor).get(i).getY() * getHeight(),
+                        routes.get(currentFloor).get(i + 1).getX() * getWidth(),
+                        routes.get(currentFloor).get(i + 1).getY() * getHeight(), p);
         }
     }
 
-    public static Drawable getDrawable(String name, Context context) {
-        int resourceId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-        return context.getResources().getDrawable(resourceId);
+    public Drawable getDrawable(String name, Context context) {
+        try {
+            int resourceId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+            return context.getResources().getDrawable(resourceId);
+        } catch (Exception e) {
+            returnToMain();
+            return null;
+        }
     }
 
 
@@ -169,4 +194,30 @@ public class MapActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //seperates a route into 2 routes, one per floor
+    private ArrayList<ArrayList<MapNode>> seperateRoute(ArrayList<MapNode> nodes)
+    {
+        ArrayList<ArrayList<MapNode>> ret = new ArrayList<ArrayList<MapNode>>();
+        ArrayList<MapNode> list1 = new ArrayList<MapNode>();
+        ArrayList<MapNode> list2 = new ArrayList<MapNode>();
+        boolean check = false;
+
+        for (int i=0; i < nodes.size(); i++)
+        {
+            if (nodes.get(i).getId().charAt(0) == 'S' && nodes.get(i).getId().length() == 3 && !check)
+            {
+                list1.add(nodes.get(i));
+                check = true;
+                continue;
+            }
+            if (check)
+                list2.add(nodes.get(i));
+            else
+                list1.add(nodes.get(i));
+        }
+
+        ret.add(list1);
+        ret.add(list2);
+        return ret;
+    }
 }
