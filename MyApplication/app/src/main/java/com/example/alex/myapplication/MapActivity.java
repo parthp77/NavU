@@ -23,7 +23,7 @@ public class MapActivity extends AppCompatActivity {
 
     private ArrayList<Building> buildings = new ArrayList<Building>();
     private ArrayList<ArrayList<MapNode>> routes = new ArrayList<ArrayList<MapNode>>();
-    private ArrayList<Drawable> maps = new ArrayList<Drawable>();
+    private ArrayList<String> maps = new ArrayList<String>();
     private int currentFloor;
     //private boolean startFloor;
 
@@ -58,7 +58,7 @@ public class MapActivity extends AppCompatActivity {
         {
             buildings.add(new Building(this, build));
             routes.add(buildings.get(0).plotCourse(buildings.get(0).getNodeById(startRoom), buildings.get(0).getNodeById(roomString)));
-            maps.add(getDrawable(startRoom.substring(0,3).toLowerCase(), this));
+            maps.add(startRoom.substring(0,3).toLowerCase());
         }
         //same building, different floors
         else if (roomString.substring(0,2).equals(startRoom.substring(0,2)))
@@ -73,8 +73,8 @@ public class MapActivity extends AppCompatActivity {
             }
 
             routes = seperateRoute(temp);
-            maps.add(getDrawable(startRoom.substring(0,3).toLowerCase(), this));
-            maps.add(getDrawable(roomString.substring(0,3).toLowerCase(), this));
+            maps.add(startRoom.substring(0,3).toLowerCase());
+            maps.add(roomString.substring(0,3).toLowerCase());
         }
         //different buildings
         else {
@@ -88,21 +88,21 @@ public class MapActivity extends AppCompatActivity {
             //if starting on first floor of first building
             if (!startRoom.substring(2, 3).equals("1")) {
                 routes = seperateRoute(temp);
-                maps.add(getDrawable(startRoom.substring(0, 3).toLowerCase(), this));
+                maps.add(startRoom.substring(0, 3).toLowerCase());
             } else {
                 routes.add(temp);
             }
-            maps.add(getDrawable(startRoom.substring(0, 2).toLowerCase() + "1", this));
+            maps.add(startRoom.substring(0, 2).toLowerCase() + "1");
 
             //add tunnels
             routes.add(buildings.get(1).plotCourse(buildings.get(1).getNodeById("TN" + startRoom.substring(0, 2)),
                     buildings.get(1).getNodeById("TN" + roomString.substring(0, 2))));
-            maps.add(getDrawable("tunnels", this));
+            maps.add("tunnels");
 
             //add second building
             routes.add(buildings.get(2).plotCourse(buildings.get(2).getNodeById(roomString.substring(0, 2) + "tunnels"),
                     buildings.get(2).getNodeById(roomString)));
-            maps.add(getDrawable(roomString.substring(0, 3).toLowerCase(), this));
+            maps.add(roomString.substring(0, 3).toLowerCase());
         }
 
             //check for tomfoolery
@@ -142,12 +142,14 @@ public class MapActivity extends AppCompatActivity {
     {
 
         Paint paint, p;
+        Context context;
 
         public MyView(Context context)
         {
             super(context);
             //map = context.getResources().getDrawable(R.drawable.hp3);
 
+            this.context = context;
             paint = new Paint();
             p = new Paint();
         }
@@ -159,8 +161,9 @@ public class MapActivity extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);
-            maps.get(currentFloor).setBounds(0,0,getWidth(),getHeight());
-            maps.get(currentFloor).draw(canvas);
+            Drawable map = getDrawable(maps.get(currentFloor), context);
+            map.setBounds(0,0,getWidth(),getHeight());
+            map.draw(canvas);
 
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(8);
